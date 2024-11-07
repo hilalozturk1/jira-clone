@@ -7,6 +7,7 @@ import { FaGithub } from "react-icons/fa";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema } from "@/features/auth/schemas";
 
 import { 
   Card, 
@@ -26,19 +27,13 @@ import {
   FormMessage
 } from "@/components/ui/form";
 
-const formSchema = z.object({
-  name: z.string().trim().min(1, "Required"),
-  email: z.string().email(),
-  password: z.string().min(8, "Min 8 required")
-});
-
-const onSubmit = (values: z.infer<typeof formSchema>) => {
+const onSubmit = (values: z.infer<typeof registerSchema>) => {
   console.log('values :>> ', {values});
 } 
 
 function SignUpPage() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
         name: "",
         email: "",
