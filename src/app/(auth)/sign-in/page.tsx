@@ -6,6 +6,7 @@ import { FaGithub } from "react-icons/fa";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/features/auth/schemas";
 
 import Link from "next/link";
 
@@ -26,18 +27,13 @@ import {
   FormMessage
 } from "@/components/ui/form";
 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, "Required")
-});
-
-const onSubmit = (values: z.infer<typeof formSchema>) => {
+const onSubmit = (values: z.infer<typeof loginSchema>) => {
   console.log('values :>> ', {values});
 } 
 
 function SignInPage() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
         email: "",
         password: ""
