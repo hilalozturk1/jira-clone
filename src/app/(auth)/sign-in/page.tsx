@@ -7,6 +7,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import Link from "next/link";
+
 import { 
   Card, 
   CardContent, 
@@ -97,6 +99,15 @@ function SignInPage() {
           <FcGoogle className="mr-2 size-5"></FcGoogle>Login with Google</Button>
         <Button disabled={false} variant="secondary" size="lg" className='w-full'>
           <FaGithub className="mr-2 size-5"></FaGithub>Login with Github</Button>
+      </CardContent>
+      <div className="px-7">
+        <Separator/>
+      </div>
+      <CardContent className="p-7 flex items-center justify-center">
+        <p>
+          Don&apos;t have an account?
+          <Link href="/sign-up" className="text-blue-700">&nbsp;Sign Up</Link>
+        </p>
       </CardContent>
     </Card>
   )
