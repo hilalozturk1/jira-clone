@@ -3,6 +3,10 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { 
   Card, 
   CardContent, 
@@ -12,8 +16,32 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage
+} from "@/components/ui/form";
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1, "Required")
+});
+
+const onSubmit = (values: z.infer<typeof formSchema>) => {
+  console.log('values :>> ', {values});
+} 
 
 function SignInPage() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+        email: "",
+        password: ""
+    },
+  });
+
   return (
     <Card className='w-full h-full md:w-[487px] border-none shadow-none'>
       <CardHeader className='flex ştems-center justify-center text-center p-5'>
@@ -25,27 +53,43 @@ function SignInPage() {
         <Separator/>
       </div>
       <CardContent className='py-7'>
-        <form className='space-y-4'>
-          <Input 
-            required
-            type='email'
-            value={""}
-            onChange={() => {}}
-            placeholder='Enter email address'
-            disabled={false}
-          />
-          <Input 
-            required
-            type='password'
-            value={""}
-            onChange={() => {}}
-            placeholder='Enter password'
-            disabled={false}
-            min={8}
-            max={256}
-          />
-          <Button className='w-full' size="lg" disabled={false}>Login</Button>
-        </form>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input 
+                      {...field}
+                      type='email'
+                      placeholder='Enter email address'
+                    />
+                  </FormControl>
+                  <FormMessage/>
+                </FormItem>
+              )}>
+            </FormField>
+            <FormField
+              name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input 
+                      {...field}
+                      type='password'
+                      placeholder='Enter password'
+                    />
+                  </FormControl>
+                  <FormMessage/>
+                </FormItem>
+              )}>
+            </FormField>
+            <Button className='w-full' size="lg" disabled={false}>Login</Button>
+          </form>
+        </Form>
         <div className="py-7">
             <Separator/>
           </div>
