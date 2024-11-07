@@ -8,6 +8,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/features/auth/schemas";
+import { useRegister } from "@/features/auth/api/use-register";
 
 import { 
   Card, 
@@ -27,11 +28,9 @@ import {
   FormMessage
 } from "@/components/ui/form";
 
-const onSubmit = (values: z.infer<typeof registerSchema>) => {
-  console.log('values :>> ', {values});
-} 
-
 function SignUpPage() {
+  const { mutate } = useRegister();
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -40,6 +39,11 @@ function SignUpPage() {
         password: ""
     },
   });
+
+  const onSubmit = (values: z.infer<typeof registerSchema>) => {
+    console.log('values :>> ', {values});
+    mutate({ json: values});
+  } 
   
   return (
     <Card className='w-full h-full md:w-[487px] border-none shadow-none'>
