@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
+import { QueryProvider } from "@/components/query-provider";
+
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
@@ -20,7 +22,9 @@ export default function RootLayout({
       <body
         className={cn(inter.className, "antialiased min-h-screen")}
       >
-        {children}
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
