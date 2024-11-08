@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { setCookie } from "hono/cookie";
+import { deleteCookie, setCookie } from "hono/cookie";
 
 import { loginSchema, registerSchema } from "../schemas";
 import { AUTH_COOKIE } from "../constants";
 
-import { createAdminClient } from "@/lib/appwrite";
 import { ID } from "node-appwrite";
+import { createAdminClient } from "@/lib/appwrite";
+import { sessionMiddleware } from "@/lib/session-middleware";
 
 const app = new Hono()
-    .post(
+    .post(//login
         "/login",
         zValidator("json", loginSchema),
         async (c) => {
@@ -33,7 +34,7 @@ const app = new Hono()
             return c.json({ success: "ok"})
         }
     )
-    .post(
+    .post(//register
         "/register",
         zValidator("json", registerSchema),
         async (c) => {
@@ -63,6 +64,15 @@ const app = new Hono()
             return c.json({ success: "ok" });
         }
     )
+    .post(//logout
+        "/logout", sessionMiddleware, async(c) => {
+        const account = c.get("account");
+       
+        deleteCookie(c, AUTH_COOKIE);
+        await account.deleteSession("current");
+        
+        return c.json({success: true});
+    })
 
 
 export default app;
