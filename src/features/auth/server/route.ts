@@ -15,6 +15,21 @@ const app = new Hono()
         zValidator("json", loginSchema),
         async (c) => {
             const { email, password } = c.req.valid("json");
+
+            const { account } = await createAdminClient();
+            const session = await account.createEmailPasswordSession(
+                email,
+                password
+            );
+
+            setCookie(c, AUTH_COOKIE, session.secret, {
+                path: "/",
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+                maxAge: 60 * 60 * 24 * 30
+            });     
+            
             return c.json({ success: "ok"})
         }
     )
