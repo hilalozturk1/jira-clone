@@ -3,33 +3,33 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
+import Link from "next/link";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/features/auth/schemas";
+
 import { useLogin } from "@/features/auth/api/use-login";
+import { useCurrent } from "@/features/auth/api/use-current";
 
-import Link from "next/link";
-
-import { 
-  Card, 
-  CardContent, 
-  CardHeader, 
-  CardTitle 
-} from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 
 function SignInPage() {
   const { mutate } = useLogin();
+  const { data, isLoading, refetch } = useCurrent();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -39,10 +39,22 @@ function SignInPage() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    console.log('values :>> ', {values});
-    mutate({ json: values});
-  } 
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    try {
+      mutate({ json: values });
+      setTimeout(async () => {
+        await refetch();
+      }, 1000);
+    } catch (error) {
+      console.error("Error: " + error);
+    }
+  };
+
+  useEffect(() => {
+    if (data && !isLoading) {
+      redirect("/");
+    }
+  }, [data]);
 
   return (
     <Card className='w-full h-full md:w-[487px] border-none shadow-none'>
