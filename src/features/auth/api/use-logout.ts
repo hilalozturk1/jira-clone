@@ -5,7 +5,7 @@ import { client } from "@/lib/rpc";
 
 type ResonseType = InferResponseType<typeof client.api.auth.logout["$post"]>;
 
-export const useLogin = () => {
+export const useLogout = () => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation<
