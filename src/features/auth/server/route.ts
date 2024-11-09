@@ -11,6 +11,15 @@ import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session-middleware";
 
 const app = new Hono()
+    .get(//current user
+        "/current", 
+        sessionMiddleware, 
+        (c) => {
+            const user = c.get("user");
+
+            return c.json({ data: user});
+        }
+    )
     .post(//login
         "/login",
         zValidator("json", loginSchema),
