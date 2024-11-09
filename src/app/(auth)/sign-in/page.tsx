@@ -46,7 +46,7 @@ function SignInPage() {
         await refetch();
       }, 1000);
     } catch (error) {
-      console.error("Error: " + error);
+      console.error("Error: ", error);
     }
   };
 
