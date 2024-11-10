@@ -101,7 +101,7 @@ function SignInPage() {
                 </FormItem>
               )}>
             </FormField>
-            <Button className='w-full' size="lg" disabled={false}>Login</Button>
+            <Button type="submit" className='w-full' size="lg" disabled={false}>Login</Button>
           </form>
         </Form>
         <div className="py-7">
