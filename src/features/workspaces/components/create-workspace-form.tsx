@@ -5,6 +5,8 @@ import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useRouter } from "next/navigation";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -23,13 +25,13 @@ import { ImageIcon } from "lucide-react";
 import { createWorkSpaceSchema } from "../schemas";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
-
 interface createWorkSpaceFormProps {
   onCancel?: () => void;
 }
 
 export const CreateWorkSpaceForm = ({ onCancel }: createWorkSpaceFormProps) => {
   const { mutate, isPending } = useCreateWorkspace();
+  const router = useRouter();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -50,8 +52,9 @@ export const CreateWorkSpaceForm = ({ onCancel }: createWorkSpaceFormProps) => {
     mutate(
       { form: finalValues },
       {
-        onSuccess: () => {
+        onSuccess: ({ data }) => {
           form.reset();
+          router.push(`/workspaces/${data.$id}`);
         },
       }
     );
