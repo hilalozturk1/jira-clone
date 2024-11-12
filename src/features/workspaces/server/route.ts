@@ -3,8 +3,15 @@ import { zValidator } from "@hono/zod-validator";
 
 import { createWorkSpaceSchema } from "../schemas";
 
+import { MemberRole } from "@/features/members/types";
+
 import { ID } from "node-appwrite";
-import { DATABASE_ID, IMAGES_BUCKET_ID, WORKSPACES_ID } from "@/config";
+import {
+  DATABASE_ID,
+  IMAGES_BUCKET_ID,
+  MEMBERS_ID,
+  WORKSPACES_ID,
+} from "@/config";
 import { sessionMiddleware } from "@/lib/session-middleware";
 
 const app = new Hono()
@@ -58,6 +65,13 @@ const app = new Hono()
           imageUrl: uploadedImageUrl,
         }
       );
+
+      await databases.createDocument(DATABASE_ID, MEMBERS_ID, ID.unique(), {
+        userId: user.$id,
+        workspaceId: workspaces.$id,
+        role: MemberRole.ADMIN,
+      });
+
       return c.json({ data: workspaces });
     }
   );
