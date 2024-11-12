@@ -5,7 +5,7 @@ import { createWorkSpaceSchema } from "../schemas";
 
 import { MemberRole } from "@/features/members/types";
 
-import { ID } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 import {
   DATABASE_ID,
   IMAGES_BUCKET_ID,
@@ -17,10 +17,22 @@ import { sessionMiddleware } from "@/lib/session-middleware";
 const app = new Hono()
   .get("/", sessionMiddleware, async (c) => {
     const databases = c.get("databases");
+    const user = c.get("user");
+
+    const members = await databases.listDocuments(DATABASE_ID, MEMBERS_ID, [
+      Query.equal("userId", user.$id),
+    ]);
+
+    if (members.total === 0) {
+      return c.json({ data: { documents: [], total: 0 } });
+    }
+
+    const workspaceIds = members.documents.map((member) => member.workspaceId);
 
     const workspaces = await databases.listDocuments(
       DATABASE_ID,
-      WORKSPACES_ID
+      WORKSPACES_ID,
+      [Query.orderDesc("$createdAt"), Query.contains("$id", workspaceIds)]
     );
 
     return c.json({ data: workspaces });
