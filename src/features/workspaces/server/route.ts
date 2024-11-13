@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 
-import { createWorkSpaceSchema } from "../schemas";
+import { createWorkSpaceSchema, updateWorkSpaceSchema } from "../schemas";
 
 import { MemberRole } from "@/features/members/types";
 import { getMember } from "@/features/members/utils";
@@ -92,7 +92,7 @@ const app = new Hono()
   .patch(
     "/:workspaceId",
     sessionMiddleware,
-    zValidator("form", createWorkSpaceSchema),
+    zValidator("form", updateWorkSpaceSchema),
     async (c) => {
       const databases = c.get("databases");
       const storage = c.get("storage");
