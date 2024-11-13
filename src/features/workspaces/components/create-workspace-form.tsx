@@ -25,6 +25,7 @@ import { ImageIcon } from "lucide-react";
 import { createWorkSpaceSchema } from "../schemas";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
+import { cn } from "@/lib/utils";
 interface createWorkSpaceFormProps {
   onCancel?: () => void;
 }
@@ -156,7 +157,7 @@ export const CreateWorkSpaceForm = ({ onCancel }: createWorkSpaceFormProps) => {
             <div className="flex items-center justify-between">
               <Button
                 type="button"
-                className=""
+                className={cn(!onCancel && "invisible")}
                 size="md"
                 disabled={isPending}
                 onClick={onCancel}
