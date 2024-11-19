@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+
+import { Projects } from "./projects";
 import { Separator } from "../components/ui/separator";
 import { Navigation } from "../components/navigation";
 import WorkspaceSwither from "./workspace-swither";
@@ -17,6 +19,7 @@ function Sidebar() {
       <WorkspaceSwither />
       <Separator className="my-4" />
       <Navigation />
+      <Projects />
     </aside>
   );
 }
