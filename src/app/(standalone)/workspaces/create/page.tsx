@@ -8,7 +8,7 @@ async function workspaceCreatePage() {
 
   return (
     <div className="w-full lg:max-w-xl">
-      <CreateWorkSpaceForm />
+      <CreateWorkSpaceForm onCancel={true}/>
     </div>
   );
 }

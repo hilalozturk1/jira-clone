@@ -26,13 +26,15 @@ import { createWorkSpaceSchema } from "../schemas";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { cn } from "@/lib/utils";
+
 interface createWorkSpaceFormProps {
-  onCancel?: () => void;
+  onCancel?: boolean;
 }
 
 export const CreateWorkSpaceForm = ({ onCancel }: createWorkSpaceFormProps) => {
-  const { mutate, isPending } = useCreateWorkspace();
   const router = useRouter();
+
+  const { mutate, isPending } = useCreateWorkspace();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -44,7 +46,6 @@ export const CreateWorkSpaceForm = ({ onCancel }: createWorkSpaceFormProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof createWorkSpaceSchema>) => {
-    console.log("values :>> ", values);
     const finalValues = {
       ...values,
       image: values.image instanceof File ? values.image : "",
@@ -179,7 +180,13 @@ export const CreateWorkSpaceForm = ({ onCancel }: createWorkSpaceFormProps) => {
                 className={cn(!onCancel && "invisible")}
                 size="md"
                 disabled={isPending}
-                onClick={onCancel}
+                onClick={
+                  onCancel
+                    ? () => {
+                        router.push("/");
+                      }
+                    : () => {}
+                }
                 variant="secondary"
               >
                 Cancel
