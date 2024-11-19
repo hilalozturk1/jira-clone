@@ -45,7 +45,11 @@ function WorkspaceSwither() {
           {data?.documents.map((i) => (
             <SelectItem key={i.$id} value={i.$id}>
               <div className="flex justify-start items-center gap-3 font-medium">
-                <WorkspaceAvatar image={i.imageUrl} name={i.name} />
+                <WorkspaceAvatar
+                  image={i.imageUrl}
+                  name={i.name}
+                  imageClassName="size-10"
+                />
                 <span className="truncate">{i.name}</span>
               </div>{" "}
             </SelectItem>

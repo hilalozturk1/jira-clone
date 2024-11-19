@@ -8,16 +8,25 @@ interface WorkspaceAvatarProps {
   image?: string;
   name: string;
   className?: string;
+  fallbackClassName?: string;
+  imageClassName?: string;
 }
 
 export const WorkspaceAvatar = ({
   image,
   name,
   className,
+  fallbackClassName,
+  imageClassName,
 }: WorkspaceAvatarProps) => {
   if (image) {
     return (
-      <div className={cn("size-10 relative rounded-md overflow-hidden")}>
+      <div
+        className={cn(
+          "relative rounded-md overflow-hidden",
+          imageClassName
+        )}
+      >
         <Image src={image} alt={name} fill className="object-cover" /> {name}
       </div>
     );
@@ -25,7 +34,12 @@ export const WorkspaceAvatar = ({
 
   return (
     <Avatar className={cn("size-10 rounded-md", className)}>
-      <AvatarFallback className="rounded-md text-white bg-blue-600 font-semibold text-lg uppercase">
+      <AvatarFallback
+        className={cn(
+          "rounded-md text-white bg-blue-600 uppercase font-semibold text-lg",
+          fallbackClassName
+        )}
+      >
         {name[0]}
       </AvatarFallback>
     </Avatar>
