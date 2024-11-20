@@ -32,11 +32,11 @@ export const useUpdateProject = () => {
       return await response.json();
     },
     onSuccess: ({ data }) => {
-      toast.success("Project creaupdatedted");
-      router.refresh();
+      toast.success("Project updated");
 
       queryClient.invalidateQueries({ queryKey: ["projects"] });
       queryClient.invalidateQueries({ queryKey: ["project", data.$id] });
+      router.refresh();
     },
     onError: () => {
       toast.error("Failed to update project");
