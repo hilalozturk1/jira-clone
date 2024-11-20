@@ -70,7 +70,7 @@ export const EditProjectForm = ({
       {
         onSuccess: ({ data }) => {
           form.reset();
-          router.push(`/workspaces/${workspaceId}/projects/${data.$id}`);
+          window.location.href = `/workspaces/${workspaceId}/projects/${data.$id}`;
         },
       }
     );
@@ -90,7 +90,7 @@ export const EditProjectForm = ({
       },
       {
         onSuccess: () => {
-          window.location.href = "/";
+          window.location.href = `/workspaces/${workspaceId}`;
         },
       }
     );
