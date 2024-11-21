@@ -2,6 +2,7 @@ import { PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import CreateTaskFormWrapper from "./create-task-form-wrapper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const TaskViewSwitcher = () => {
@@ -43,7 +44,7 @@ export const TaskViewSwitcher = () => {
       </div>
 
       <span className="ps-7">Data Filters</span>
-      <div className="p-7">
+      <div className="px-7 pt-7">
         <Separator />
       </div>
       <div className="ps-7 pb-7">
@@ -57,6 +58,7 @@ export const TaskViewSwitcher = () => {
           Data calendar
         </TabsContent>
       </div>
+      <CreateTaskFormWrapper />
     </Tabs>
   );
 };
