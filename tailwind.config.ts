@@ -9,6 +9,7 @@ const config: Config = {
 	"./src/features/auth/**/*.{js,ts,jsx,tsx,mdx}",
 	"./src/features/workspaces/**/*.{js,ts,jsx,tsx,mdx}",
 	"./src/features/members/**/*.{js,ts,jsx,tsx,mdx}",
+	"./src/features/tasks/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
   	extend: {

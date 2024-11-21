@@ -7,6 +7,7 @@ import { WorkspaceAvatar } from "@/features/workspaces/components/workspace-avat
 
 import { getCurrent } from "@/features/auth/actions";
 import { getProjectInfo } from "@/features/projects/queries";
+import { TaskViewSwitcher } from "@/features/tasks/components/task-view-switcher";
 
 interface ProjectIdPageProps {
   params: {
@@ -23,25 +24,28 @@ const Project = async ({ params }: ProjectIdPageProps) => {
   });
 
   return (
-    <div className="flex  max-w-screen-2xl mx-auto justify-between w-full p-[50px]">
-      <div className="flex items-center gap-x-2">
-        <WorkspaceAvatar
-          name={initialValues?.name}
-          image={initialValues?.imageUrl}
-          imageClassName="size-10"
-        />
-        <p className="text-md font-semibold p-2"> {initialValues?.name}</p>
+    <div className="flex flex-col w-full p-[50px] max-[600px]:p-4 bg-card rounded-lg">
+      <div className="flex max-w-screen-2xl mx-auto justify-between w-full mb-5">
+        <div className="flex items-center gap-x-2">
+          <WorkspaceAvatar
+            name={initialValues?.name}
+            image={initialValues?.imageUrl}
+            imageClassName="size-10"
+          />
+          <p className="text-md font-medium p-2"> {initialValues?.name}</p>
+        </div>
+        <div>
+          <Button type="button" variant="ghost" size="sm" asChild>
+            <Link
+              href={`/workspaces/${initialValues?.workspaceId}/projects/${initialValues.$id}/settings`}
+            >
+              <PencilIcon />
+              Edit Button
+            </Link>
+          </Button>
+        </div>
       </div>
-      <div>
-        <Button type="button" variant="secondary" size="sm" asChild>
-          <Link
-            href={`/workspaces/${initialValues?.workspaceId}/projects/${initialValues.$id}/settings`}
-          >
-            <PencilIcon />
-            Edit Button
-          </Link>
-        </Button>
-      </div>
+      <TaskViewSwitcher />
     </div>
   );
 };
