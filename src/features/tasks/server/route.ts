@@ -160,7 +160,7 @@ const app = new Hono()
         ]
       );
 
-      const newPosition =
+      const position =
         highestPositionTask.documents.length > 0
           ? highestPositionTask.documents[0].position + 1000
           : 1000;
@@ -170,12 +170,13 @@ const app = new Hono()
         TASKS_ID,
         ID.unique(),
         {
+          name,
           status,
           workspaceId,
           projectId,
           dueDate,
           assigneeId,
-          position: newPosition,
+          position,
         }
       );
 
