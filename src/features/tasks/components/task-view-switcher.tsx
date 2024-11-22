@@ -1,4 +1,8 @@
-import { PlusIcon } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+
+import { DeleteIcon, PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -6,6 +10,26 @@ import CreateTaskFormWrapper from "./create-task-form-wrapper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const TaskViewSwitcher = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+  let button;
+
+  if (!isOpen) {
+    button = (
+      <Button size="sm" className="w-full " onClick={() => setIsOpen(!isOpen)}>
+        <PlusIcon />
+        New
+      </Button>
+    );
+  } else {
+    button = button = (
+      <Button size="sm" className="w-full " onClick={() => setIsOpen(!isOpen)}>
+        <DeleteIcon />
+        Close
+      </Button>
+    );
+  }
+
   return (
     <Tabs className="flex flex-col justify-between w-full rounded-lg shadow-neutral-300 shadow-md">
       <div className="h-full flex overflow-auto">
@@ -30,12 +54,7 @@ export const TaskViewSwitcher = () => {
               Calander
             </TabsTrigger>
           </TabsList>
-          <div className="px-4 w-full md:w-auto">
-            <Button size="sm" className="w-full ">
-              <PlusIcon />
-              New
-            </Button>
-          </div>
+          <div className="px-4 w-full md:w-auto">{button}</div>
         </div>
       </div>
 
@@ -58,7 +77,7 @@ export const TaskViewSwitcher = () => {
           Data calendar
         </TabsContent>
       </div>
-      <CreateTaskFormWrapper />
+      {isOpen && <CreateTaskFormWrapper />}
     </Tabs>
   );
 };
