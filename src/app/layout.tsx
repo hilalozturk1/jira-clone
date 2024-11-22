@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(inter.className, "antialiased min-h-screen")}
+        className={cn(inter.className, "antialiased min-h-screen break-words")}
       >
         <QueryProvider>
           <Toaster />
