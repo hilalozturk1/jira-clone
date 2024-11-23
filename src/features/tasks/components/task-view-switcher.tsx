@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { DeleteIcon, Loader, PlusIcon } from "lucide-react";
 
+import { DataFilters } from "./data-filters";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import CreateTaskFormWrapper from "./create-task-form-wrapper";
@@ -15,16 +16,22 @@ import { useGetTasks } from "../api/use-get-tasks";
 
 export const TaskViewSwitcher = () => {
   const router = useRouter();
-
   const workspaceId = useWorkspaceId();
-  const { data: tasksData, isLoading: isLoadingTasks } = useGetTasks({
-    workspaceId,
-  });
 
+  const [isOpen, setIsOpen] = useState(false);
   const [tabValue, setTabValue] = useState("");
   const [localStorageTabValue, setLocalStorageTabValue] = useState("");
 
-  const [isOpen, setIsOpen] = useState(false);
+  let getStatus;
+  if (typeof window !== "undefined") {
+    getStatus = localStorage.getItem("localStorageStatus") as string;
+  }
+
+  const { data: tasksData, isLoading: isLoadingTasks } = useGetTasks({
+    workspaceId,
+    status: getStatus,
+  });
+
   let button;
 
   if (!isOpen) {
@@ -44,22 +51,23 @@ export const TaskViewSwitcher = () => {
   }
 
   useEffect(() => {
-    const getLocalStorageTabValue = localStorage.getItem(
-      "localStorageTabValue"
-    ) as string;
+    if (typeof window !== "undefined") {
+      const getLocalStorageTabValue = localStorage.getItem(
+        "localStorageTabValue"
+      ) as string;
 
-    if (!getLocalStorageTabValue) {
-      localStorage.setItem("localStorageTabValue", "table");
-
-      router.refresh();
-    } else {
-      if (tabValue) {
-        localStorage.setItem("localStorageTabValue", tabValue);
-        setLocalStorageTabValue(tabValue);
+      if (!getLocalStorageTabValue) {
+        localStorage.setItem("localStorageTabValue", "table");
       } else {
-        localStorage.setItem("localStorageTabValue", getLocalStorageTabValue);
-        setLocalStorageTabValue(getLocalStorageTabValue);
+        if (tabValue) {
+          localStorage.setItem("localStorageTabValue", tabValue);
+          setLocalStorageTabValue(tabValue);
+        } else {
+          localStorage.setItem("localStorageTabValue", getLocalStorageTabValue);
+          setLocalStorageTabValue(getLocalStorageTabValue);
+        }
       }
+      router.refresh();
     }
   }, [tabValue, setTabValue]);
 
@@ -102,7 +110,11 @@ export const TaskViewSwitcher = () => {
           <Separator />
         </div>
 
-        <span className="ps-7">Data Filters</span>
+        <div className="px-7">
+          <span>Data Filters</span>
+          <DataFilters></DataFilters>
+        </div>
+
         <div className="px-7 pt-7">
           <Separator />
         </div>

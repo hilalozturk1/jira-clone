@@ -57,7 +57,8 @@ const app = new Hono()
 
       if (status) {
         console.log("status :>> ", status);
-        query.push(Query.equal("status", status));
+        if (status !== TaskStatus.ALL)
+          query.push(Query.equal("status", status));
       }
 
       if (assigneeId) {
