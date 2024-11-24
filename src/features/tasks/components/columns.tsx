@@ -1,6 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { useRouter } from "next/navigation";
 
 import { TaskStatus } from "../types";
 
@@ -32,6 +33,8 @@ export type Task = {
   project: string;
   position: number;
   dueDate: string;
+  workspaceId: string;
+  projectId: string;
   $id: string;
 };
 
@@ -110,6 +113,7 @@ export const columns: ColumnDef<Task>[] = [
     id: "actions",
     cell: ({ row }) => {
       const actions = row.original;
+      const router = useRouter();
       const { mutate: deleteTask, isPending: isDeletingTask } = UseDeleteTask();
 
       const handleDeleteTask = (taskId: string) => {
@@ -134,14 +138,22 @@ export const columns: ColumnDef<Task>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => {}}
+              onClick={() => {
+                router.push(
+                  `/workspaces/${actions.workspaceId}/projects/${actions.projectId}`
+                );
+              }}
               className="font-medium p-[10px]"
             >
               <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
               Open Project
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => {}}
+              onClick={() =>
+                router.push(
+                  `/workspaces/${actions.workspaceId}/projects/${actions.projectId}/task/${actions.$id}`
+                )
+              }
               className="font-medium p-[10px]"
             >
               <PencilIcon className="size-4 mr-2 stroke-2" />
@@ -149,6 +161,7 @@ export const columns: ColumnDef<Task>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => handleDeleteTask(actions.$id)}
+              disabled={isDeletingTask}
               className="text-amber-700 focus:text-amber-700 font-medium p-[10px]"
             >
               <TrashIcon className="size-4 mr-2 stroke-2" />
