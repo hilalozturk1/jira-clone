@@ -4,6 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { TaskStatus } from "../types";
 
+import { UseDeleteTask } from "../api/use-delete-task";
+
 import {
   ArrowUpDown,
   ExternalLinkIcon,
@@ -30,6 +32,7 @@ export type Task = {
   project: string;
   position: number;
   dueDate: string;
+  $id: string;
 };
 
 export const columns: ColumnDef<Task>[] = [
@@ -106,7 +109,12 @@ export const columns: ColumnDef<Task>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      //const actions = row.original;
+      const actions = row.original;
+      const { mutate: deleteTask, isPending: isDeletingTask } = UseDeleteTask();
+
+      const handleDeleteTask = (taskId: string) => {
+        deleteTask({ param: { taskId } });
+      };
 
       return (
         <DropdownMenu>
@@ -140,7 +148,7 @@ export const columns: ColumnDef<Task>[] = [
               Edit Task
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => {}}
+              onClick={() => handleDeleteTask(actions.$id)}
               className="text-amber-700 focus:text-amber-700 font-medium p-[10px]"
             >
               <TrashIcon className="size-4 mr-2 stroke-2" />
