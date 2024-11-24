@@ -33,7 +33,7 @@ import {
 import { MemberAvatar } from "@/features/members/components/members-avatar";
 import { WorkspaceAvatar } from "@/features/workspaces/components/workspace-avatar";
 
-import { usecreateTask } from "../api/use-create-tasks";
+import { UseCreateTask } from "../api/use-create-tasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
 interface CreateTasksFormProps {
@@ -50,7 +50,7 @@ export const CreateTasksForm = ({
   const router = useRouter();
 
   const workspaceId = useWorkspaceId();
-  const { mutate, isPending } = usecreateTask();
+  const { mutate, isPending } = UseCreateTask();
 
   const form = useForm<z.infer<typeof createTaskSchema>>({
     resolver: zodResolver(createTaskSchema.omit({ workspaceId: true })),

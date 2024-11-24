@@ -5,10 +5,13 @@ import { InferRequestType, InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
 
+import { useRouter } from "next/navigation";
+
 type ResonseType = InferResponseType<(typeof client.api.tasks)["$post"], 200>;
 type RequestType = InferRequestType<(typeof client.api.tasks)["$post"]>;
 
-export const usecreateTask = () => {
+export const UseCreateTask = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResonseType, Error, RequestType>({
@@ -24,6 +27,7 @@ export const usecreateTask = () => {
     onSuccess: () => {
       toast.success("Task created");
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      router.refresh();
     },
     onError: () => {
       toast.error("Failed to create task");
