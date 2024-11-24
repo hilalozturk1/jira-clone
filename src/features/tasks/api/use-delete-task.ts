@@ -39,7 +39,7 @@ export const UseDeleteTask = () => {
       router.refresh();
     },
     onError: () => {
-      toast.error("Failed to create task");
+      toast.error("Failed to delete task");
     },
   });
 
