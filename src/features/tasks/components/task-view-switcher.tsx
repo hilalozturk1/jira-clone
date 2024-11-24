@@ -5,14 +5,17 @@ import { useEffect, useState } from "react";
 
 import { DeleteIcon, Loader, PlusIcon } from "lucide-react";
 
+import { DataTable } from "./data-table";
 import { DataFilters } from "./data-filters";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import CreateTaskFormWrapper from "./create-task-form-wrapper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { columns } from "./columns";
+
 import { useGetTasks } from "../api/use-get-tasks";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
 export const TaskViewSwitcher = () => {
   const router = useRouter();
@@ -129,7 +132,7 @@ export const TaskViewSwitcher = () => {
         ) : (
           <div className="ps-7 pb-7">
             <TabsContent value="table" className="mt-0">
-              {JSON.stringify(tasksData)}
+              <DataTable columns={columns} data={tasksData?.documents ?? []} />
             </TabsContent>
             <TabsContent value="kanban" className="mt-0">
               {JSON.stringify(tasksData)}
