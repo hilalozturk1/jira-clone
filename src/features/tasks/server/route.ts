@@ -52,7 +52,8 @@ const app = new Hono()
 
       if (projectId) {
         console.log("projectId :>> ", projectId);
-        query.push(Query.equal("projectId", projectId));
+        if (projectId !== TaskStatus.ALL)
+          query.push(Query.equal("projectId", projectId));
       }
 
       if (status) {

@@ -23,13 +23,17 @@ export const TaskViewSwitcher = () => {
   const [localStorageTabValue, setLocalStorageTabValue] = useState("");
 
   let getStatus;
+  let getProject;
+
   if (typeof window !== "undefined") {
     getStatus = localStorage.getItem("localStorageStatus") as string;
+    getProject = localStorage.getItem("localStorageProjectId") as string;
   }
 
   const { data: tasksData, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
     status: getStatus,
+    projectId: getProject,
   });
 
   let button;

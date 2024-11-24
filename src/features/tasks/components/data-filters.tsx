@@ -2,7 +2,7 @@ import { TaskStatus } from "../types";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ListCheckIcon } from "lucide-react";
+import { FolderIcon, ListCheckIcon } from "lucide-react";
 
 import {
   Select,
@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 
-import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
@@ -27,27 +26,21 @@ export const DataFilters = ({}: DataFiltersProps) => {
   const [filter, setFilter] = useState("");
   const [localStorageStatus, setLocalStorageStatus] = useState("");
 
+  const [filterProjectId, setFilterProjectId] = useState("");
+  const [localStorageProjectId, setLocalStorageProjectId] = useState("");
+
   const workspaceId = useWorkspaceId();
 
   const { data: projectsData, isLoading: isLoadingProjects } = useGetProjects({
-    workspaceId,
-  });
-  const { data: membersData, isLoading: isLoadingMembers } = useGetMembers({
     workspaceId,
   });
 
   const projectOptions = projectsData?.documents.map((project) => ({
     id: project.$id,
     name: project?.name,
-    imageUrl: project?.imageUrl,
   }));
 
-  const memberOptions = membersData?.documents.map((member) => ({
-    id: member.$id,
-    name: member.name,
-  }));
-
-  const isLoading = isLoadingProjects || isLoadingMembers;
+  const isLoading = isLoadingProjects;
 
   useEffect(() => {
     const getLocalStorageStatus = localStorage.getItem(
@@ -68,8 +61,31 @@ export const DataFilters = ({}: DataFiltersProps) => {
     router.refresh();
   }, [filter, setFilter]);
 
+  useEffect(() => {
+    const getLocalStorageProjectId = localStorage.getItem(
+      "localStorageProjectId"
+    ) as string;
+
+    if (!getLocalStorageProjectId) {
+      localStorage.setItem("localStorageProjectId", TaskStatus.ALL);
+    } else {
+      if (filterProjectId) {
+        localStorage.setItem("localStorageProjectId", filterProjectId);
+        setLocalStorageProjectId(filterProjectId);
+      } else {
+        localStorage.setItem("localStorageProjectId", getLocalStorageProjectId);
+        setLocalStorageProjectId(getLocalStorageProjectId);
+      }
+    }
+    router.refresh();
+  }, [filterProjectId, setFilterProjectId]);
+
   const onStatusChange = (value: string) => {
     setFilter(value as TaskStatus);
+  };
+
+  const onProjectChange = (value: string) => {
+    setFilterProjectId(value);
   };
 
   if (isLoading) {
@@ -77,7 +93,7 @@ export const DataFilters = ({}: DataFiltersProps) => {
   }
 
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-col gap-2 lg:flex-row">
       <div className="basis-full lg:basis-1/4">
         <Select
           defaultValue={localStorageStatus || undefined}
@@ -97,6 +113,28 @@ export const DataFilters = ({}: DataFiltersProps) => {
             <SelectItem value={TaskStatus.IN_REVIEW}>In review</SelectItem>
             <SelectItem value={TaskStatus.TODO}>Todo</SelectItem>
             <SelectItem value={TaskStatus.DONE}>Done</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="basis-full lg:basis-1/4">
+        <Select
+          defaultValue={localStorageProjectId}
+          onValueChange={(value) => onProjectChange(value)}
+        >
+          <SelectTrigger className="w-full h-8">
+            <div className="flex items-center pr-2">
+              <FolderIcon className="size-4 mr-2" />
+              <SelectValue placeholder="All Projects" />
+            </div>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={TaskStatus.ALL}>All Projects</SelectItem>
+            <Separator />
+            {projectOptions?.map((project) => (
+              <SelectItem key={project.id} value={project.id}>
+                {project.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
