@@ -1,6 +1,6 @@
 import { getTaskInfo } from "@/features/tasks/queries";
 
-import EditTaskFormWrapper from "@/features/tasks/components/edit-task-form";
+import EditTaskForm from "@/features/tasks/components/edit-task-form";
 
 interface TaskPageProps {
   params: {
@@ -13,7 +13,7 @@ async function Task({ params }: TaskPageProps) {
     taskId: params.taskId,
   });
 
-  return <EditTaskFormWrapper></EditTaskFormWrapper>;
+  return <EditTaskForm data={data}></EditTaskForm>;
 }
 
 export default Task;
