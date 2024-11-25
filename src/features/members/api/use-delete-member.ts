@@ -5,7 +5,7 @@ import { client } from "@/lib/rpc";
 import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-type ResonseType = InferResponseType<
+type ResponseType = InferResponseType<
   (typeof client.api.members)[":memberId"]["$delete"],
   200
 >;
@@ -16,7 +16,7 @@ type RequestType = InferRequestType<
 export const useDeleteMember = () => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<ResonseType, Error, RequestType>({
+  const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
       const response = await client.api.members[":memberId"].$delete({
         param,

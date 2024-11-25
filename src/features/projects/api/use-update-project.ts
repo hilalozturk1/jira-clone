@@ -6,7 +6,7 @@ import { InferRequestType, InferResponseType } from "hono";
 import { client } from "@/lib/rpc";
 import { useRouter } from "next/navigation";
 
-type ResonseType = InferResponseType<
+type ResponseType = InferResponseType<
   (typeof client.api.projects)[":projectId"]["$patch"],
   200
 >;
@@ -18,7 +18,7 @@ export const useUpdateProject = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<ResonseType, Error, RequestType>({
+  const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ form, param }) => {
       const response = await client.api.projects[":projectId"].$patch({
         form,

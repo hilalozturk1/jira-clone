@@ -7,7 +7,7 @@ import { client } from "@/lib/rpc";
 
 import { useRouter } from "next/navigation";
 
-type ResonseType = InferResponseType<
+type ResponseType = InferResponseType<
   (typeof client.api.tasks)[":taskId"]["$delete"],
   200
 >;
@@ -19,7 +19,7 @@ export const UseDeleteTask = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<ResonseType, Error, RequestType>({
+  const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
       const response = await client.api.tasks[":taskId"].$delete({
         param,

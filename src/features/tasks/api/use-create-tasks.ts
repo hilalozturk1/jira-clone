@@ -7,14 +7,14 @@ import { client } from "@/lib/rpc";
 
 import { useRouter } from "next/navigation";
 
-type ResonseType = InferResponseType<(typeof client.api.tasks)["$post"], 200>;
+type ResponseType = InferResponseType<(typeof client.api.tasks)["$post"], 200>;
 type RequestType = InferRequestType<(typeof client.api.tasks)["$post"]>;
 
 export const UseCreateTask = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<ResonseType, Error, RequestType>({
+  const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await client.api.tasks.$post({ json });
 

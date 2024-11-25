@@ -5,13 +5,13 @@ import { InferRequestType, InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
 
-type ResonseType = InferResponseType<(typeof client.api.workspaces)["$post"]>;
+type ResponseType = InferResponseType<(typeof client.api.workspaces)["$post"]>;
 type RequestType = InferRequestType<(typeof client.api.workspaces)["$post"]>;
 
 export const useCreateWorkspace = () => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<ResonseType, Error, RequestType>({
+  const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ form }) => {
       const response = await client.api.workspaces.$post({ form });
 

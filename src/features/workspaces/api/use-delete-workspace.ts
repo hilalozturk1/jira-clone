@@ -5,7 +5,7 @@ import { InferRequestType, InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
 
-type ResonseType = InferResponseType<
+type ResponseType = InferResponseType<
   (typeof client.api.workspaces)[":workspaceId"]["$delete"],
   200
 >;
@@ -16,7 +16,7 @@ type RequestType = InferRequestType<
 export const useDeleteWorkspace = () => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<ResonseType, Error, RequestType>({
+  const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
       const response = await client.api.workspaces[":workspaceId"].$delete({
         param,

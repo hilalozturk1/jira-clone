@@ -3,12 +3,12 @@ import { InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
 
-type ResonseType = InferResponseType<typeof client.api.auth.logout["$post"]>;
+type ResponseType = InferResponseType<typeof client.api.auth.logout["$post"]>;
 
 export const useLogout = () => {
 
     const mutation = useMutation<
-    ResonseType,
+    ResponseType,
     Error>({
         mutationFn: async() => {
            const response = await client.api.auth.logout.$post();
