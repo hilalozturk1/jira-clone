@@ -5,6 +5,7 @@ import { useState } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
 
 import KanbanColumnHeader from "./kanban-column-header";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const boards: TaskStatus[] = [
   TaskStatus.BACKLOG,
@@ -42,26 +43,29 @@ export const DataKanban = ({ data }: DataKanbanProps) => {
         (a, b) => a.position - b.position
       );
     });
-    
+
     return initialTasks;
   });
   return (
-    <DragDropContext onDragEnd={() => {}}>
-      <div className="flex overflow-x-auto gap-x-2">
-        {boards.map((board) => {
-          return (
-            <div
-              key={board}
-              className="flex-1 p-1.5 rounded-md border border-slate-200 m-w-[200px]"
-            >
-              <KanbanColumnHeader
-                board={board}
-                taskCount={tasks[board].length}
-              ></KanbanColumnHeader>
-            </div>
-          );
-        })}
-      </div>
-    </DragDropContext>
+    <ScrollArea className="w-full whitespace-nowrap border-none border">
+      <DragDropContext onDragEnd={() => {}}>
+        <div className="flex overflow-x-auto gap-x-2">
+          {boards.map((board) => {
+            return (
+              <div
+                key={board}
+                className="flex-1 p-1.5 rounded-md border border-slate-200 m-w-[200px]"
+              >
+                <KanbanColumnHeader
+                  board={board}
+                  taskCount={tasks[board].length}
+                ></KanbanColumnHeader>
+              </div>
+            );
+          })}
+        </div>
+      </DragDropContext>
+      <ScrollBar orientation="horizontal" />
+    </ScrollArea>
   );
 };

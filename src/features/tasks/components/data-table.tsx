@@ -25,6 +25,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface DataTableProps {
   data: any[];
@@ -74,7 +75,7 @@ export function DataTable({ columns, data }: DataTableProps) {
           className="max-w-sm"
         />
       </div>
-      <div className="rounded-md border">
+      <ScrollArea className="w-full whitespace-nowrap rounded-md border-none">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -123,7 +124,8 @@ export function DataTable({ columns, data }: DataTableProps) {
             )}
           </TableBody>
         </Table>
-      </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
       <div className="flex items-center justify-end space-x-2 py-4">
         <Button
           onClick={() => table.previousPage()}
