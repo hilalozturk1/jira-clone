@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import { Task } from "../types";
 
 import { TaskDropdown } from "./task-dropdown";
@@ -21,8 +23,11 @@ export const KanbanCard = ({ task }: KanbanCardProps) => {
       <div className="flex items-center gap-x-1.5">
         <MemberAvatar
           name={task.assignee.name}
-          fallbackClassName="text-[10px]"
+          fallbackClassName="text-[10px] bg-slate-300"
         />
+        <div className="text-sm rounded-full p-2">
+          {moment(task.dueDate).format("LL")}
+        </div>
       </div>
     </div>
   );
