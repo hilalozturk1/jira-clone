@@ -22,10 +22,7 @@ export const WorkspaceAvatar = ({
   if (image) {
     return (
       <div
-        className={cn(
-          "relative rounded-md overflow-hidden",
-          imageClassName
-        )}
+        className={cn("relative rounded-md overflow-hidden", imageClassName)}
       >
         <Image src={image} alt={name} fill className="object-cover" /> {name}
       </div>
@@ -40,7 +37,7 @@ export const WorkspaceAvatar = ({
           fallbackClassName
         )}
       >
-        {name[0]}
+        {name && name[0]}
       </AvatarFallback>
     </Avatar>
   );
