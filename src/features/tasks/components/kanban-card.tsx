@@ -23,7 +23,7 @@ export const KanbanCard = ({ task }: KanbanCardProps) => {
       </div>
       <div className="flex items-center gap-x-1.5">
         <MemberAvatar
-          name={task.assignee.name}
+          name={task?.assignee?.name}
           fallbackClassName="text-[10px] bg-slate-300"
         />
         <div className="text-sm rounded-full p-2">
@@ -31,14 +31,14 @@ export const KanbanCard = ({ task }: KanbanCardProps) => {
         </div>
       </div>
       <div className="flex items-center gap-x-3">
-          <WorkspaceAvatar
-          name={task.project.name}
-          image={task.project.image}
+        <WorkspaceAvatar
+          name={task?.project?.name}
+          image={task?.project?.image}
           fallbackClassName="text-[10px] rounded-full"
           className="text-sm size-5 "
-          />
-          <span className="text-sm">{task.project.name}</span>
-        </div>
+        />
+        <span className="text-sm">{task?.project?.name}</span>
+      </div>
     </div>
   );
 };
