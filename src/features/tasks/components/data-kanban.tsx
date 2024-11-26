@@ -103,9 +103,7 @@ export const DataKanban = ({ data, onChange }: DataKanbanProps) => {
         }
 
         const updatedMoveTask =
-          sourceStatus !== destStatus
-            ? { ...movedTask, status: destStatus }
-            : movedTask;
+          sourceStatus !== destStatus ? movedTask.$id : movedTask;
 
         newTasks[sourceStatus] = sourceColumn;
         const destColumn = [...newTasks[destStatus]];
