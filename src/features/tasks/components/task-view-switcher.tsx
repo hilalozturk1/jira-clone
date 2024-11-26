@@ -16,6 +16,7 @@ import { columns } from "./columns";
 
 import { useGetTasks } from "../api/use-get-tasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { DataKanban } from "./data-kanban";
 
 export const TaskViewSwitcher = () => {
   const router = useRouter();
@@ -122,7 +123,7 @@ export const TaskViewSwitcher = () => {
           <DataFilters></DataFilters>
         </div>
 
-        <div className="px-7 pt-7">
+        <div className="p-7">
           <Separator />
         </div>
         {isLoadingTasks ? (
@@ -130,12 +131,12 @@ export const TaskViewSwitcher = () => {
             <Loader className="size-5 animate-spin" />
           </div>
         ) : (
-          <div className="ps-7 pb-7">
+          <div className="px-7 pb-7">
             <TabsContent value="table" className="mt-0">
               <DataTable columns={columns} data={tasksData?.documents ?? []} />
             </TabsContent>
             <TabsContent value="kanban" className="mt-0">
-              {JSON.stringify(tasksData)}
+              <DataKanban data={tasksData?.documents || []}></DataKanban>
             </TabsContent>
             <TabsContent value="calendar" className="mt-0">
               Data calendar
