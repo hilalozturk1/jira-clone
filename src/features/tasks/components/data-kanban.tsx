@@ -103,7 +103,9 @@ export const DataKanban = ({ data, onChange }: DataKanbanProps) => {
         }
 
         const updatedMoveTask =
-          sourceStatus !== destStatus ? movedTask.$id : movedTask;
+          sourceStatus !== destStatus
+            ? { ...movedTask, status: destStatus }
+            : movedTask;
 
         newTasks[sourceStatus] = sourceColumn;
         const destColumn = [...newTasks[destStatus]];
@@ -113,7 +115,7 @@ export const DataKanban = ({ data, onChange }: DataKanbanProps) => {
         updatesPayload = [];
 
         updatesPayload.push({
-          $id: updatedMoveTask,
+          $id: updatedMoveTask.$id,
           status: destStatus,
           position: Math.min((destination.index + 1) * 1000, 1_000_000),
         });
