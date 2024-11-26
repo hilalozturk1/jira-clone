@@ -2,10 +2,10 @@ import { Task, TaskStatus } from "../types";
 
 import { useState } from "react";
 
-import { DragDropContext } from "@hello-pangea/dnd";
-
+import { KanbanCard } from "./kanban-card";
 import KanbanColumnHeader from "./kanban-column-header";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 const boards: TaskStatus[] = [
   TaskStatus.BACKLOG,
@@ -60,6 +60,35 @@ export const DataKanban = ({ data }: DataKanbanProps) => {
                   board={board}
                   taskCount={tasks[board].length}
                 ></KanbanColumnHeader>
+                <Droppable droppableId={board}>
+                  {(provided) => {
+                    return (
+                      <div
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        className="min-h-[200px] py-1.5"
+                      >
+                        {tasks[board].map((task, index) => (
+                          <Draggable
+                            key={index}
+                            draggableId={index}
+                            index={index}
+                          >
+                            {(provided) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                <KanbanCard task={task} />
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                      </div>
+                    );
+                  }}
+                </Droppable>
               </div>
             );
           })}
