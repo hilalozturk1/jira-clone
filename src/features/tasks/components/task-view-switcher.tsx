@@ -19,6 +19,7 @@ import { columns } from "./columns";
 import { useGetTasks } from "../api/use-get-tasks";
 import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import DataCalendar from "./data-calendar";
 
 export const TaskViewSwitcher = () => {
   const router = useRouter();
@@ -155,7 +156,7 @@ export const TaskViewSwitcher = () => {
               ></DataKanban>
             </TabsContent>
             <TabsContent value="calendar" className="mt-0">
-              Data calendar
+              <DataCalendar data={tasksData?.documents || []} />
             </TabsContent>
           </div>
         )}
