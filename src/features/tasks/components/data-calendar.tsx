@@ -9,6 +9,9 @@ import {
   startOfWeek,
   subMonths,
 } from "date-fns";
+
+import EventCard from "./event-card";
+import CustomToolbar from "./custom-toolbar";
 import { enUS } from "date-fns/locale/en-US";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 
@@ -66,6 +69,20 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
       formats={{
         weekdayFormat: (date, culture, localizer) =>
           localizer?.format(date, "EEE", culture) ?? "",
+      }}
+      components={{
+        eventWrapper: ({ event }) => (
+          <EventCard
+            id={event.id}
+            title={event.title}
+            assignee={event.assignee}
+            project={event.project}
+            status={event.status}
+          />
+        ),
+        toolbar: ({}) => (
+          <CustomToolbar date={value} onNavigate={handleNavigate} />
+        ),
       }}
     />
   );
