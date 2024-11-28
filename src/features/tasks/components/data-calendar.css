@@ -1,3 +1,7 @@
 .rbc-month-row {
-    @apply min-h-[180px]
+    @apply min-h-[100px]
+}
+
+.rbc-date-cell {
+    @apply text-xs
 }
