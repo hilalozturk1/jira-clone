@@ -111,7 +111,10 @@ export const EditWorkSpaceForm = ({
     );
   };
 
-  const fullInviteLink = `${window.location.origin}/workspaces/${initialValues.$id}/join/${initialValues.inviteCode}`;
+  let fullInviteLink="";
+  if (typeof window !== "undefined") {
+    fullInviteLink = `${window.location.origin}/workspaces/${initialValues.$id}/join/${initialValues.inviteCode}`;
+  }
 
   const handleCopyInviteLink = () => {
     navigator.clipboard
