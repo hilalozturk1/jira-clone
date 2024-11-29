@@ -130,7 +130,11 @@ export const columns: ColumnDef<Task>[] = [
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => {}}
+              onClick={() => {
+                router.push(
+                  `/workspaces/${actions.workspaceId}/projects/${actions.projectId}/task/${actions.$id}/details`
+                );
+              }}
               className="font-medium p-[10px]"
             >
               <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
