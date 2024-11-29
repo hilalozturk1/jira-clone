@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 
 import { RiAddCircleFill } from "react-icons/ri";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { WorkspaceAvatar } from "@/features/workspaces/components/workspace-avatar";
@@ -14,12 +13,16 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
 export const Projects = () => {
   const router = useRouter();
-  const pathname = usePathname();
 
   const workspaceId = useWorkspaceId();
   const { data } = useGetProjects({
     workspaceId,
   });
+
+  const setProjectId = (project: string) => {
+    localStorage.setItem("localStorageProjectId", project);
+    router.refresh();
+  };
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -33,29 +36,29 @@ export const Projects = () => {
         />
       </div>
       {data?.documents.map((project) => {
-        const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
-        const isActive = pathname === href;
+        const isActive =
+          localStorage.getItem("localStorageProjectId") === project.$id;
 
         return (
-          <Link href={href} key={project.$id}>
-            <div
-              className={cn(
-                "flex items-center gap-2.5 p-2.5 rounded-md hover-opacity-75 transition cursor-pointer",
-                isActive && "bg-white shadow-sm hover:opacity-100 text-primary"
-              )}
-            >
-              <WorkspaceAvatar
-                image={project?.imageUrl}
-                name={project?.name}
-                className="size-7"
-                fallbackClassName="text-xs font-light"
-                imageClassName="size-7"
-              />
-              <span className="truncate font-light text-sm">
-                {project.name}
-              </span>
-            </div>
-          </Link>
+          <div
+            key={project.$id}
+            className={cn(
+              "flex items-center gap-2.5 p-2.5 rounded-md hover-opacity-75 transition cursor-pointer",
+              isActive && "bg-white shadow-sm hover:opacity-100 text-primary"
+            )}
+            onClick={() => {
+              setProjectId(project.$id);
+            }}
+          >
+            <WorkspaceAvatar
+              image={project?.imageUrl}
+              name={project?.name}
+              className="size-7"
+              fallbackClassName="text-xs font-light"
+              imageClassName="size-7"
+            />
+            <span className="truncate font-light text-sm">{project.name}</span>
+          </div>
         );
       })}
     </div>

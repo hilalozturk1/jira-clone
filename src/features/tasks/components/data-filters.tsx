@@ -120,6 +120,7 @@ export const DataFilters = ({}: DataFiltersProps) => {
         <Select
           defaultValue={localStorageProjectId}
           onValueChange={(value) => onProjectChange(value)}
+          value={localStorageProjectId}
         >
           <SelectTrigger className="w-full h-8">
             <div className="flex items-center pr-2">
