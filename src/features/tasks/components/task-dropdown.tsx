@@ -41,7 +41,14 @@ export const TaskDropdown = ({ task }: TaskDropdownProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={() => {}} className="font-medium p-[10px]">
+        <DropdownMenuItem
+          onClick={() => {
+            router.push(
+              `/workspaces/${task.workspaceId}/projects/${task.projectId}/task/${task.$id}/details`
+            );
+          }}
+          className="font-medium p-[10px]"
+        >
           <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
           Task Details
         </DropdownMenuItem>
