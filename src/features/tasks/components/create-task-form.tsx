@@ -81,7 +81,7 @@ export const CreateTasksForm = ({
   };
 
   return (
-    <Card className="w-full h-full border-none shadow-none bg-white">
+    <Card className="w-full h-full border-none shadow-none">
       <CardHeader className="flex p-7">
         <CardTitle className="text-xl font-semibold">
           Create a new task
