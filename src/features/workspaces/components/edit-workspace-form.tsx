@@ -64,7 +64,7 @@ export const EditWorkSpaceForm = ({
     console.log("values :>> ", values);
     const finalValues = {
       ...values,
-      image: values.image instanceof File ? values.image : undefined,
+      image: values.image instanceof File ? values.image : "",
     };
 
     mutate(
@@ -206,7 +206,8 @@ export const EditWorkSpaceForm = ({
                               size="xs"
                               className="w-fit my-2"
                               onClick={() => {
-                                field.onChange(null);
+                                field.value = "";
+                                field.onChange(undefined);
                                 if (inputRef.current) {
                                   inputRef.current.value = "";
                                 }

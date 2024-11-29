@@ -113,7 +113,7 @@ const app = new Hono()
         return c.json({ error: "Unauthorized" }, 401);
       }
 
-      let uploadedImageUrl: string | undefined;
+      let uploadedImageUrl: string | undefined | null;
 
       if (image instanceof File) {
         const file = await storage.createFile(
@@ -130,6 +130,10 @@ const app = new Hono()
         uploadedImageUrl = `data:image/png;base64,${Buffer.from(
           arrayBuffer
         ).toString("base64")}`;
+      } else if (image === "undefined" || image === undefined) {
+        uploadedImageUrl = null;
+      } else {
+        uploadedImageUrl = image;
       }
 
       const workspace = await databases.updateDocument(

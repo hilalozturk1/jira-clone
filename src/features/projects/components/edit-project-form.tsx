@@ -180,7 +180,8 @@ export const EditProjectForm = ({
                               size="xs"
                               className="w-fit my-2"
                               onClick={() => {
-                                field.onChange(null);
+                                field.value = "";
+                                field.onChange(undefined);
                                 if (inputRef.current) {
                                   inputRef.current.value = "";
                                 }
