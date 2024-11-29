@@ -10,7 +10,7 @@ import { createTaskSchema } from "../schemas";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
-import { Loader } from "lucide-react";
+import { ArrowLeftIcon, Loader } from "lucide-react";
 
 import { useUpdateTask } from "../api/use-update-task";
 import { useGetMembers } from "@/features/members/api/use-get-members";
@@ -114,7 +114,21 @@ const EditTaskForm = ({ onCancel, data }: EditTaskFormProps) => {
   return (
     <Card className="w-full h-full border-none shadow-none">
       <CardHeader className="flex p-7">
-        <CardTitle className="text-xl font-semibold">Update task</CardTitle>
+        <CardTitle className="text-xl font-semibold items-center">
+          <Button
+            size="md"
+            variant="ghost"
+            onClick={() =>
+              router.push(
+                `/workspaces/${workspaceId}/projects/${data.projectId}`
+              )
+            }
+          >
+            <ArrowLeftIcon className="size-4 mr-2" />
+            Back
+          </Button>
+          <span> Update task</span>
+        </CardTitle>
       </CardHeader>
       <div className="px-7">
         <Separator />
