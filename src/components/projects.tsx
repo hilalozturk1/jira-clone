@@ -4,7 +4,8 @@ import { cn } from "@/lib/utils";
 
 import { RiAddCircleFill } from "react-icons/ri";
 
-import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import {  useRouter } from "next/navigation";
 
 import { WorkspaceAvatar } from "@/features/workspaces/components/workspace-avatar";
 
@@ -38,27 +39,32 @@ export const Projects = () => {
       {data?.documents.map((project) => {
         const isActive =
           localStorage.getItem("localStorageProjectId") === project.$id;
+        const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
 
         return (
-          <div
-            key={project.$id}
-            className={cn(
-              "flex items-center gap-2.5 p-2.5 rounded-md hover-opacity-75 transition cursor-pointer",
-              isActive && "bg-white shadow-sm hover:opacity-100 text-primary"
-            )}
-            onClick={() => {
-              setProjectId(project.$id);
-            }}
-          >
-            <WorkspaceAvatar
-              image={project?.imageUrl}
-              name={project?.name}
-              className="size-7"
-              fallbackClassName="text-xs font-light"
-              imageClassName="size-7"
-            />
-            <span className="truncate font-light text-sm">{project.name}</span>
-          </div>
+          <Link href={href} key={project.$id}>
+            <div
+              key={project.$id}
+              className={cn(
+                "flex items-center gap-2.5 p-2.5 rounded-md hover-opacity-75 transition cursor-pointer",
+                isActive && "bg-white shadow-sm hover:opacity-100 text-primary"
+              )}
+              onClick={() => {
+                setProjectId(project.$id);
+              }}
+            >
+              <WorkspaceAvatar
+                image={project?.imageUrl}
+                name={project?.name}
+                className="size-7"
+                fallbackClassName="text-xs font-light"
+                imageClassName="size-7"
+              />
+              <span className="truncate font-light text-sm">
+                {project.name}
+              </span>
+            </div>
+          </Link>
         );
       })}
     </div>

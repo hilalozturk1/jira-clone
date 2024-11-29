@@ -25,7 +25,7 @@ function WorkspaceSwither() {
   };
 
   const createWorkspace = () => {
-    router.push("/workspaces/create");
+    router.push(`/workspaces/${workspaceId}/create`);
   };
 
   return (
