@@ -11,3 +11,7 @@
     @apply bg-white;
   }
 }
+
+.rbc-row-content-scrollable .rbc-row-content-scroll-container {
+  scrollbar-width: thin !important;
+}
