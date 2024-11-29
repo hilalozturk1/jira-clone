@@ -93,8 +93,16 @@ export const TaskViewSwitcher = () => {
     [bulkUpdate]
   );
 
+  if (isLoadingTasks) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center">
+        <Loader className="size-5 animate-spin" />
+      </div>
+    );
+  }
+
   return (
-    localStorageTabValue && (
+    <>
       <Tabs
         value={localStorageTabValue}
         className="flex flex-col justify-between w-full rounded-none shadow-neutral-300 shadow-none bg-slate-200 bg-opacity-25"
@@ -132,38 +140,29 @@ export const TaskViewSwitcher = () => {
           <Separator />
         </div>
 
-
         <span className="px-7 mb-2">Data Filters</span>
-
         <div className="px-7">
           <DataFilters></DataFilters>
         </div>
-
         <div className="p-7">
           <Separator />
         </div>
-        {isLoadingTasks ? (
-          <div className="h-screen flex flex-col items-center justify-center">
-            <Loader className="size-5 animate-spin" />
-          </div>
-        ) : (
-          <div className="px-7 pb-7">
-            <TabsContent value="table" className="mt-0">
-              <DataTable columns={columns} data={tasksData?.documents ?? []} />
-            </TabsContent>
-            <TabsContent value="kanban" className="mt-0">
-              <DataKanban
-                onChange={onKanbanChange}
-                data={tasksData?.documents || []}
-              ></DataKanban>
-            </TabsContent>
-            <TabsContent value="calendar" className="mt-0">
-              <DataCalendar data={tasksData?.documents || []} />
-            </TabsContent>
-          </div>
-        )}
-        {isOpen && <CreateTaskFormWrapper />}
+        <div className="px-7 pb-7">
+          <TabsContent value="table" className="mt-0">
+            <DataTable columns={columns} data={tasksData?.documents ?? []} />
+          </TabsContent>
+          <TabsContent value="kanban" className="mt-0">
+            <DataKanban
+              onChange={onKanbanChange}
+              data={tasksData?.documents || []}
+            ></DataKanban>
+          </TabsContent>
+          <TabsContent value="calendar" className="mt-0">
+            <DataCalendar data={tasksData?.documents || []} />
+          </TabsContent>
+        </div>
       </Tabs>
-    )
+      {isOpen && <CreateTaskFormWrapper />}
+    </>
   );
 };
