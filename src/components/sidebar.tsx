@@ -8,8 +8,8 @@ import WorkspaceSwither from "./workspace-swither";
 
 function Sidebar() {
   return (
-    <aside className="h-full bg-neutral-100 p-4 w-full">
-      <Link href="" className="flex justify-center items-center">
+    <aside className="h-full bg-slate-100 p-4 w-full">
+      <Link href="" className="flex justify-center items-center h-[72px]">
         <Image src="/logo.svg" alt="logo" width={35} height={35} />
         <span className="ms-4 text-amber-400 text-primary font-medium">
           Company
@@ -19,6 +19,7 @@ function Sidebar() {
       <WorkspaceSwither />
       <Separator className="my-4" />
       <Navigation />
+      <Separator className="my-4" />
       <Projects />
     </aside>
   );

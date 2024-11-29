@@ -1,7 +1,13 @@
 .rbc-month-row {
-    @apply min-h-[100px]
+  @apply min-h-[100px];
 }
 
 .rbc-date-cell {
-    @apply text-xs
+  @apply text-xs;
+}
+
+.rbc-row-bg {
+  .rbc-off-range-bg {
+    @apply bg-white;
+  }
 }

@@ -97,7 +97,7 @@ export const TaskViewSwitcher = () => {
     localStorageTabValue && (
       <Tabs
         value={localStorageTabValue}
-        className="flex flex-col justify-between w-full rounded-lg shadow-neutral-300 shadow-md"
+        className="flex flex-col justify-between w-full rounded-none shadow-neutral-300 shadow-none bg-slate-200 bg-opacity-25"
       >
         <div className="h-full flex overflow-auto">
           <div className="w-full flex md:flex-row flex-col md:justify-between gap-y-2 items-center">
@@ -128,12 +128,14 @@ export const TaskViewSwitcher = () => {
           </div>
         </div>
 
-        <div className="p-7">
+        <div className="px-7 pb-7 pt-1">
           <Separator />
         </div>
 
+
+        <span className="px-7 mb-2">Data Filters</span>
+
         <div className="px-7">
-          <span>Data Filters</span>
           <DataFilters></DataFilters>
         </div>
 

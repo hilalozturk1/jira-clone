@@ -34,21 +34,23 @@ function WorkspaceSwither() {
         <p className="text-xs uppercase text-neutral-500">Workspaces</p>
         <RiAddCircleFill
           onClick={createWorkspace}
-          className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition"
+          className="size-5 text-neutral-300 cursor-pointer hover:opacity-75 transition"
         />
       </div>
       <Select onValueChange={onSelect} value={workspaceId}>
-        <SelectTrigger className="w-full bg-neutral-200 font-medium p-1">
+        <SelectTrigger className="w-full text-slate-500 bg-slate-200 text-[15px] font-normal p-2 border-none shadow-none h-10">
           <SelectValue placeholder="No workspace selected." />
         </SelectTrigger>
         <SelectContent>
           {data?.documents.map((i) => (
             <SelectItem key={i.$id} value={i.$id}>
-              <div className="flex justify-start items-center gap-3 font-medium">
+              <div className="flex justify-start items-center gap-3">
                 <WorkspaceAvatar
                   image={i.imageUrl}
                   name={i.name}
-                  imageClassName="size-10"
+                  imageClassName="size-2 text-sm font-normal bg-slate-300"
+                  className="size-6 text-sm font-normal bg-slate-300"
+                  fallbackClassName="bg-slate-300 text-lg font-normal"
                 />
                 <span className="truncate">{i.name}</span>
               </div>{" "}

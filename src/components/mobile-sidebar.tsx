@@ -19,7 +19,7 @@ function MobileSidebar() {
   return (
     <Sheet modal={false} open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button size="icon" variant="secondary" className="lg:hidden">
+        <Button size="icon" variant="ghost" className="lg:hidden">
           <MenuIcon className="size-4 text-neutral-500"></MenuIcon>
         </Button>
       </SheetTrigger>

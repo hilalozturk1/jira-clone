@@ -22,14 +22,14 @@ export const Projects = () => {
   });
 
   return (
-    <div className="flex flex-col gap-y-2">
+    <div className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
         <p className="text-xs uppercase text-neutral-500">Projects</p>
         <RiAddCircleFill
           onClick={() => {
             router.push(`/workspaces/${workspaceId}/projects/create`);
           }}
-          className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition"
+          className="size-5 text-slate-300 cursor-pointer hover:opacity-75 transition"
         />
       </div>
       {data?.documents.map((project) => {
