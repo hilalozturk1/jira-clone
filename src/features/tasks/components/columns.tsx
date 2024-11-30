@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { WorkspaceAvatar } from "@/features/workspaces/components/workspace-avatar";
+import moment from "moment";
 
 export type Task = {
   name: string;
@@ -108,6 +109,14 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "dueDate",
     header: "Due Date",
+    cell: ({ row }) => {
+      const dueDate = row.original.dueDate;
+      return (
+        <div className="flex items-center gap-x-2 text-sm">
+          <span className="line-clamp-1"> {moment(dueDate).format("LL")}</span>
+        </div>
+      );
+    },
   },
   {
     id: "actions",
