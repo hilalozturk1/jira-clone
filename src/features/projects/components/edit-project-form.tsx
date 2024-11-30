@@ -25,24 +25,25 @@ import { ArrowLeftIcon, ImageIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { cn } from "@/lib/utils";
 
-import { Project } from "../types";
 import { updateProjectSchema } from "../schema";
 
+import { useGetProject } from "../api/use-get-project";
 import { useDeleteProject } from "../api/use-delete-project";
 import { useUpdateProject } from "../api/use-update-project";
+import { useProjectId } from "@/features/workspaces/hooks/use-project-id";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
 interface editProjectFormProps {
-  onCancel?: () => void;
-  initialValues: Project;
+  onCancel?: boolean;
 }
 
-export const EditProjectForm = ({
-  onCancel,
-  initialValues,
-}: editProjectFormProps) => {
+export const EditProjectForm = ({ onCancel }: editProjectFormProps) => {
   const router = useRouter();
+
+  const projectId = useProjectId();
   const workspaceId = useWorkspaceId();
+
+  const { data: initialValues } = useGetProject({ projectId });
   const { mutate, isPending } = useUpdateProject();
 
   const { mutate: deleteWorkspace, isPending: isDeletingProject } =
@@ -54,7 +55,7 @@ export const EditProjectForm = ({
     resolver: zodResolver(updateProjectSchema),
     defaultValues: {
       ...initialValues,
-      image: initialValues.imageUrl ?? "",
+      image: initialValues?.imageUrl ?? "",
     },
   });
 
@@ -66,7 +67,7 @@ export const EditProjectForm = ({
     };
 
     mutate(
-      { form: finalValues, param: { projectId: initialValues.$id } },
+      { form: finalValues, param: { projectId: initialValues?.$id || "" } },
       {
         onSuccess: ({ data }) => {
           form.reset();
@@ -86,7 +87,7 @@ export const EditProjectForm = ({
   const handleDelete = () => {
     deleteWorkspace(
       {
-        param: { projectId: initialValues.$id },
+        param: { projectId: initialValues?.$id || "" },
       },
       {
         onSuccess: () => {
@@ -103,13 +104,13 @@ export const EditProjectForm = ({
           <Button
             size="sm"
             variant="secondary"
-            onClick={() => router.push(`/workspaces/${initialValues.$id}`)}
+            onClick={() => router.push(`/workspaces/${initialValues?.$id}`)}
           >
             <ArrowLeftIcon className="size-4 mr-2" />
             Back
           </Button>
           <CardTitle className="text-xl font-semibold">
-            {initialValues.name}
+            {initialValues?.name}
           </CardTitle>
         </CardHeader>
         <div className="px-7">
@@ -216,7 +217,15 @@ export const EditProjectForm = ({
                   className={cn(!onCancel && "invisible")}
                   size="md"
                   disabled={isPending}
-                  onClick={onCancel}
+                  onClick={
+                    onCancel
+                      ? () => {
+                          router.push(
+                            `/workspaces/${workspaceId}/projects/${projectId}`
+                          );
+                        }
+                      : () => {}
+                  }
                   variant="secondary"
                 >
                   Cancel
