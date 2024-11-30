@@ -136,6 +136,34 @@ const app = new Hono()
       });
     }
   )
+  .get("/:taskId", sessionMiddleware, async (c) => {
+    const databases = c.get("databases");
+    const user = c.get("user");
+
+    const { taskId } = c.req.param();
+
+    const task = await databases.getDocument<Task>(
+      DATABASE_ID,
+      TASKS_ID,
+      taskId
+    );
+
+    const member = await getMember({
+      databases,
+      workspaceId: task.workspaceId,
+      userId: user.$id,
+    });
+
+    if (!member) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
+
+    return c.json({
+      data: {
+        task,
+      },
+    });
+  })
   .post(
     "/",
     sessionMiddleware,
