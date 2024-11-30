@@ -66,15 +66,10 @@ export const EditProjectForm = ({ onCancel }: editProjectFormProps) => {
       image: values.image instanceof File ? values.image : "",
     };
 
-    mutate(
-      { form: finalValues, param: { projectId: initialValues?.$id || "" } },
-      {
-        onSuccess: ({ data }) => {
-          form.reset();
-          window.location.href = `/workspaces/${workspaceId}/projects/${data.$id}`;
-        },
-      }
-    );
+    mutate({
+      form: finalValues,
+      param: { projectId: initialValues?.$id || "" },
+    });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

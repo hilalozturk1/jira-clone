@@ -67,15 +67,7 @@ export const EditWorkSpaceForm = ({
       image: values.image instanceof File ? values.image : "",
     };
 
-    mutate(
-      { form: finalValues, param: { workspaceId: initialValues.$id } },
-      {
-        onSuccess: ({ data }) => {
-          form.reset();
-          router.push(`/workspaces/${data.$id}`);
-        },
-      }
-    );
+    mutate({ form: finalValues, param: { workspaceId: initialValues.$id } });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +103,7 @@ export const EditWorkSpaceForm = ({
     );
   };
 
-  let fullInviteLink="";
+  let fullInviteLink = "";
   if (typeof window !== "undefined") {
     fullInviteLink = `${window.location.origin}/workspaces/${initialValues.$id}/join/${initialValues.inviteCode}`;
   }
