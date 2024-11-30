@@ -48,7 +48,7 @@ export const TaskBreadcrumbs = ({ project, task }: TaskBreadcrumbsProps) => {
           <span className="text-[15px] text-slate-500">{project.name}</span>
         </Link>
         <SlashIcon className="size-4 lg:size-4 text-slate-600" />
-        <span className="text-[15px] text-slate-700">{task.name}</span>
+        <span className="text-[15px] text-slate-700">{task?.name}</span>
       </div>
       <TrashIcon
         onClick={handleDeleteTask}

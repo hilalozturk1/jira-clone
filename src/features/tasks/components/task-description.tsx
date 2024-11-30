@@ -16,7 +16,7 @@ interface TaskDesriptionProps {
 
 export const TaskDescription = ({ task }: TaskDesriptionProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [value, setValue] = useState(task.description);
+  const [value, setValue] = useState(task?.description);
 
   const { mutate, isPending } = useUpdateTask();
 
@@ -67,7 +67,7 @@ export const TaskDescription = ({ task }: TaskDesriptionProps) => {
         </div>
       ) : (
         <div className="flex flex-col gap-y-4">
-          {task.description || (
+          {task?.description || (
             <span className="text-slate-400 text-sm">No description set</span>
           )}
         </div>

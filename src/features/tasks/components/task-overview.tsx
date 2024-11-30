@@ -49,15 +49,15 @@ const TaskOverview = ({ task, project }: TaskOverviewProps) => {
         <Separator className="my-4" />
         <div className="flex flex-col gap-y-4">
           <OverviewProperty label="Due Date">
-            <span>{moment(task.dueDate).format("LL")}</span>
+            <span>{moment(task?.dueDate).format("LL")}</span>
           </OverviewProperty>
           <OverviewProperty label="Status">
             <div
               className={`flex flex-col rounded-lg p-1 text-xs ${
-                statusColorMap[task.status]
+                statusColorMap[task?.status]
               }`}
             >
-              {task.status}
+              {task?.status}
             </div>
           </OverviewProperty>
         </div>
