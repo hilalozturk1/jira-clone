@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 
-import { createTaskSchema } from "../schemas";
+import { createTaskSchema, updateTaskSchema } from "../schemas";
 
 import { Task, TaskStatus } from "../types";
 import { Project } from "@/features/projects/types";
@@ -194,7 +194,7 @@ const app = new Hono()
   .patch(
     "/:taskId",
     sessionMiddleware,
-    zValidator("json", createTaskSchema),
+    zValidator("json", updateTaskSchema),
     async (c) => {
       const user = c.get("user");
       const databases = c.get("databases");
