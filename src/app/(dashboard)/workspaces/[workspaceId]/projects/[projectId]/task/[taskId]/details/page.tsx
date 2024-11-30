@@ -34,7 +34,6 @@ const TaskDetail = async ({ params }: TaskDetailsPageProps) => {
       <Separator className="my-4" />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <TaskOverview project={projectData} task={taskData} />
-        <Separator className="" />
         <TaskDescription task={taskData} />
       </div>
     </div>
