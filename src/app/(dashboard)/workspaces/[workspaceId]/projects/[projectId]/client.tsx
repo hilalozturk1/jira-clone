@@ -2,19 +2,33 @@
 
 import Link from "next/link";
 
-import { ArrowLeftIcon, PencilIcon } from "lucide-react";
+import { ArrowLeftIcon, Loader, PencilIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Analytics } from "@/components/analytics";
 import { TaskViewSwitcher } from "@/features/tasks/components/task-view-switcher";
 import { WorkspaceAvatar } from "@/features/workspaces/components/workspace-avatar";
 
 import { useGetProject } from "@/features/projects/api/use-get-project";
 import { useProjectId } from "@/features/workspaces/hooks/use-project-id";
+import { useGetAnalytics } from "@/features/projects/api/use-get-analytics";
 
 export const ProjectIdClient = () => {
   const projectId = useProjectId();
 
-  const { data } = useGetProject({ projectId });
+  const { data, isLoading: isLoadingProject } = useGetProject({ projectId });
+  const { data: analytics, isLoading: isLoadingAnalytics } = useGetAnalytics({
+    projectId,
+  });
+  const isLoading = isLoadingProject || isLoadingAnalytics;
+
+  if (isLoading) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center">
+        <Loader className="size-5 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full p-[50px] max-[600px]:p-4 bg-card rounded-lg">
@@ -44,6 +58,7 @@ export const ProjectIdClient = () => {
           <p className="text-md font-medium p-2"> {data?.name}</p>
         </div>
       </div>
+      <Analytics data={analytics?.analyticsCount} />
       <TaskViewSwitcher />
     </div>
   );
