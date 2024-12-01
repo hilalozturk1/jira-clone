@@ -29,7 +29,7 @@ const statusColorMap: Record<TaskStatus, string> = {
 const TaskOverview = ({ task, project }: TaskOverviewProps) => {
   const router = useRouter();
   return (
-    <div className="flex flex-col gap-y-4 col-span-1">
+    <div className="flex flex-col gap-y-4 col-span-1 bg-slate-100">
       <div className="rounded-lg p-4">
         <div className="flex items-center justify-between">
           <p className="text-lg font-semibold">Overview</p>

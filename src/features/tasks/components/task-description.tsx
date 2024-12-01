@@ -39,7 +39,7 @@ export const TaskDescription = ({ task }: TaskDesriptionProps) => {
     );
   };
   return (
-    <div className="p-4">
+    <div className="p-4 bg-slate-100">
       <div className="flex items-center justify-between">
         <p className="text-lg">Overview</p>
         <Button
