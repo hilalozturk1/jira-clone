@@ -17,3 +17,16 @@ export type Task = Models.Document & {
   dueDate: string;
   description?: string;
 };
+
+export type AnalyticsTypes = {
+  thisMonthTaskCount: number;
+  thisMonthAssignedCount: number;
+  thisMonthCompletedCount: number;
+  thisMontIncompletedCount: number;
+  thisMonthOverdueCount: number;
+  thisMonthMinusLastMonth: number;
+  thisMonthMinusLastMonthAssigned: number;
+  thisMonthMinusLastMonthCompleted: number;
+  thisMonthMinusLastMonthIncompleted: number;
+  thisMonthMinusLastMonthOverdue: number;
+};
