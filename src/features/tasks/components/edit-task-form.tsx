@@ -134,7 +134,7 @@ const EditTaskForm = ({ onCancel }: EditTaskFormProps) => {
               <ArrowLeftIcon className="size-4 mr-2" />
               Back
             </Button>
-            <span> Update task</span> {taskData?.task?.name}
+            <span>Update task</span>
           </CardTitle>
         </CardHeader>
         <div className="px-7">
@@ -166,7 +166,7 @@ const EditTaskForm = ({ onCancel }: EditTaskFormProps) => {
                 <FormField
                   name="dueDate"
                   control={form.control}
-                  render={({ field }) => (
+                  render={({}) => (
                     <FormItem>
                       <FormLabel>Due Date</FormLabel>
                       <FormControl>
@@ -216,7 +216,7 @@ const EditTaskForm = ({ onCancel }: EditTaskFormProps) => {
                               </SelectItem>
                             ))
                           ) : (
-                            <div>Data doesn't exist.</div>
+                            <div>Data doesn&apost;t exist.</div>
                           )}
                         </SelectContent>
                       </Select>
@@ -228,7 +228,7 @@ const EditTaskForm = ({ onCancel }: EditTaskFormProps) => {
                   name="status"
                   control={form.control}
                   disabled={isPending}
-                  render={({ field }) => (
+                  render={({}) => (
                     <FormItem>
                       <FormLabel>Status</FormLabel>
                       <Select
@@ -265,7 +265,7 @@ const EditTaskForm = ({ onCancel }: EditTaskFormProps) => {
                 <FormField
                   name="projectId"
                   control={form.control}
-                  render={({ field }) => (
+                  render={({}) => (
                     <FormItem>
                       <FormLabel>ProjectId</FormLabel>
                       <Select
@@ -297,7 +297,7 @@ const EditTaskForm = ({ onCancel }: EditTaskFormProps) => {
                               </SelectItem>
                             ))
                           ) : (
-                            <div>Data doesn't exist.</div>
+                            <div>Data doesn&apost;t exist.</div>
                           )}
                         </SelectContent>
                       </Select>
