@@ -21,15 +21,22 @@ export const TaskDescription = ({ task }: TaskDesriptionProps) => {
   const { mutate, isPending } = useUpdateTask();
 
   const handleUpdateDescription = () => {
-    mutate({
-      json: {
-        description: value,
-        workspaceId: task.workspaceId,
+    mutate(
+      {
+        json: {
+          description: value,
+          workspaceId: task.workspaceId,
+        },
+        param: {
+          taskId: task.$id,
+        },
       },
-      param: {
-        taskId: task.$id,
-      },
-    });
+      {
+        onSuccess: () => {
+          setIsEditing(false);
+        },
+      }
+    );
   };
   return (
     <div className="p-4">
