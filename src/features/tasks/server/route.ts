@@ -185,7 +185,7 @@ const app = new Hono()
         return c.json({ error: "Unauthorized" });
       }
 
-      const highestPositionTask = await databases.listDocuments(
+      const highestPositionTask = await databases.listDocuments<Task>(
         DATABASE_ID,
         TASKS_ID,
         [
@@ -201,7 +201,7 @@ const app = new Hono()
           ? highestPositionTask.documents[0].position + 1000
           : 1000;
 
-      const task = await databases.createDocument(
+      const task = await databases.createDocument<Task>(
         DATABASE_ID,
         TASKS_ID,
         ID.unique(),
@@ -248,7 +248,7 @@ const app = new Hono()
         return c.json({ error: "Unauthorized" });
       }
 
-      const updatedTask = await databases.updateDocument(
+      const updatedTask = await databases.updateDocument<Task>(
         DATABASE_ID,
         TASKS_ID,
         taskId,

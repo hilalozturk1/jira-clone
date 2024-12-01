@@ -43,7 +43,7 @@ const app = new Hono()
         c.json({ error: "Unauthorized" }, 401);
       }
 
-      const projects = await databases.listDocuments(DATABASE_ID, PROJECTS_ID, [
+      const projects = await databases.listDocuments<Project>(DATABASE_ID, PROJECTS_ID, [
         Query.equal("workspaceId", workspaceId),
         Query.orderDesc("$createdAt"),
       ]);
@@ -119,7 +119,7 @@ const app = new Hono()
         ).toString("base64")}`;
       }
 
-      const project = await databases.createDocument(
+      const project = await databases.createDocument<Project>(
         DATABASE_ID,
         PROJECTS_ID,
         ID.unique(),
@@ -184,7 +184,7 @@ const app = new Hono()
         uploadedImageUrl = image;
       }
 
-      const updatedProject = await databases.updateDocument(
+      const updatedProject = await databases.updateDocument<Project>(
         DATABASE_ID,
         PROJECTS_ID,
         projectId,
@@ -248,7 +248,7 @@ const app = new Hono()
       c.json({ error: "Unauthorized" }, 401);
     }
 
-    const projects = await databases.listDocuments(DATABASE_ID, PROJECTS_ID, [
+    const projects = await databases.listDocuments<Project>(DATABASE_ID, PROJECTS_ID, [
       Query.equal("workspaceId", project.workspaceId),
     ]);
 

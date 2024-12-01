@@ -1,6 +1,7 @@
 import { Query, type Databases } from "node-appwrite";
 
 import { DATABASE_ID, MEMBERS_ID } from "@/config";
+import { MemberType } from "./types";
 
 interface GetMemberProps {
   databases: Databases;
@@ -13,7 +14,7 @@ export const getMember = async ({
   workspaceId,
   userId,
 }: GetMemberProps) => {
-  const members = await databases.listDocuments(DATABASE_ID, MEMBERS_ID, [
+  const members = await databases.listDocuments<MemberType>(DATABASE_ID, MEMBERS_ID, [
     Query.equal("workspaceId", workspaceId),
     Query.equal("userId", userId),
   ]);
