@@ -248,6 +248,10 @@ const app = new Hono()
       c.json({ error: "Unauthorized" }, 401);
     }
 
+    const projects = await databases.listDocuments(DATABASE_ID, PROJECTS_ID, [
+      Query.equal("workspaceId", project.workspaceId),
+    ]);
+
     const now = new Date();
     const thisMonthStart = startOfMonth(now);
     const thisMonthEnd = endOfMonth(now);
@@ -340,7 +344,6 @@ const app = new Hono()
       TASKS_ID,
       [
         Query.equal("projectId", projectId),
-        Query.notEqual("status", TaskStatus.DONE),
         Query.lessThan("dueDate", now.toISOString()),
         Query.greaterThanEqual("$createdAt", thisMonthStart.toISOString()),
         Query.lessThanEqual("$createdAt", thisMonthEnd.toISOString()),
@@ -352,7 +355,6 @@ const app = new Hono()
       TASKS_ID,
       [
         Query.equal("projectId", projectId),
-        Query.notEqual("status", TaskStatus.DONE),
         Query.lessThan("dueDate", now.toISOString()),
         Query.greaterThanEqual("$createdAt", lastMonthStart.toISOString()),
         Query.lessThanEqual("$createdAt", lastMonthEnd.toISOString()),
@@ -364,16 +366,19 @@ const app = new Hono()
 
     return c.json({
       data: {
-        thisMonthTaskCount: taskCount,
-        thisMonthAssignedCount: assignedTaskCount,
-        thisMonthCompletedCount: completedTaskCount,
-        thisMontIncompletedCount: incompleteTaskCount,
-        thisMonthOverdueCount: overdueCount,
-        thisMonthMinusLastMonth: taskDifference,
-        thisMonthMinusLastMonthAssigned: assignedTaskDifference,
-        thisMonthMinusLastMonthCompleted: completedTaskDifference,
-        thisMonthMinusLastMonthIncompleted: incompleteTaskDifference,
-        thisMonthMinusLastMonthOverdue: overdueTaskDifference,
+        projectCount: projects.total,
+        analyticsCount: {
+          thisMonthTaskCount: taskCount,
+          thisMonthAssignedCount: assignedTaskCount,
+          thisMonthCompletedCount: completedTaskCount,
+          thisMontIncompletedCount: incompleteTaskCount,
+          thisMonthOverdueCount: overdueCount,
+          thisMonthMinusLastMonth: taskDifference,
+          thisMonthMinusLastMonthAssigned: assignedTaskDifference,
+          thisMonthMinusLastMonthCompleted: completedTaskDifference,
+          thisMonthMinusLastMonthIncompleted: incompleteTaskDifference,
+          thisMonthMinusLastMonthOverdue: overdueTaskDifference,
+        },
       },
     });
   });
