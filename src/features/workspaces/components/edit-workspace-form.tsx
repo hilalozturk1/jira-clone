@@ -91,16 +91,9 @@ export const EditWorkSpaceForm = ({
   };
 
   const handleResetInviteCode = () => {
-    resetInviteCode(
-      {
-        param: { workspaceId: initialValues.$id },
-      },
-      {
-        onSuccess: () => {
-          router.refresh();
-        },
-      }
-    );
+    resetInviteCode({
+      param: { workspaceId: initialValues.$id },
+    });
   };
 
   let fullInviteLink = "";

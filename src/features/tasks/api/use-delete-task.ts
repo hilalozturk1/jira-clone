@@ -5,8 +5,6 @@ import { InferRequestType, InferResponseType } from "hono";
 
 import { client } from "@/lib/rpc";
 
-import { useRouter } from "next/navigation";
-
 type ResponseType = InferResponseType<
   (typeof client.api.tasks)[":taskId"]["$delete"],
   200
@@ -16,7 +14,6 @@ type RequestType = InferRequestType<
 >;
 
 export const UseDeleteTask = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -35,8 +32,7 @@ export const UseDeleteTask = () => {
       toast.success("Task deleted");
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
-
-      router.refresh();
+      
     },
     onError: () => {
       toast.error("Failed to delete task");
