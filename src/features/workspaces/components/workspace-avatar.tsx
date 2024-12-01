@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface WorkspaceAvatarProps {
   image?: string;
-  name: string;
+  name: string | undefined;
   className?: string;
   fallbackClassName?: string;
   imageClassName?: string;
