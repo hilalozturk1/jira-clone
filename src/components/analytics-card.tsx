@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 import { FaCaretDown, FaCaretUp, FaMinus } from "react-icons/fa";
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardDescription, CardHeader } from "./ui/card";
 
 interface AnalyticsCardProps {
   title: string;
@@ -27,7 +27,7 @@ export const AnalyticsCard = ({
     variant === "up" ? FaCaretUp : variant === "down" ? FaCaretDown : FaMinus;
 
   return (
-    <Card className="shadow-none border-r-2 border-y-0 border-l-0 w-full">
+    <Card className="shadow-none border-none w-full">
       <CardHeader>
         <div className="flex items-center gap-x-2.5">
           <CardDescription className="flex items-center gap-x-2 font-medium overflow-hidden">
@@ -45,8 +45,9 @@ export const AnalyticsCard = ({
             </span>
           </div>
         </div>
-        <CardTitle>This Month</CardTitle>
-        {value}
+        <span className="text-xs text-muted-foreground">
+          This Month {value}
+        </span>
       </CardHeader>
     </Card>
   );
