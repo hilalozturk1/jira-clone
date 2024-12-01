@@ -33,7 +33,7 @@ import {
 import { MemberAvatar } from "@/features/members/components/members-avatar";
 import { WorkspaceAvatar } from "@/features/workspaces/components/workspace-avatar";
 
-import { UseCreateTask } from "../api/use-create-tasks";
+import { UseCreateTask } from "../api/use-create-task";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
 interface CreateTasksFormProps {
