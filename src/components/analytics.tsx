@@ -4,7 +4,7 @@ import { AnalyticsCard } from "./analytics-card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface AnalyticsProps {
-  data: AnalyticsTypes;
+  data: AnalyticsTypes | undefined;
 }
 
 export const Analytics = ({ data }: AnalyticsProps) => {
