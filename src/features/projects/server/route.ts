@@ -248,10 +248,6 @@ const app = new Hono()
       c.json({ error: "Unauthorized" }, 401);
     }
 
-    const projects = await databases.listDocuments<Project>(DATABASE_ID, PROJECTS_ID, [
-      Query.equal("workspaceId", project.workspaceId),
-    ]);
-
     const now = new Date();
     const thisMonthStart = startOfMonth(now);
     const thisMonthEnd = endOfMonth(now);
@@ -366,19 +362,16 @@ const app = new Hono()
 
     return c.json({
       data: {
-        projectCount: projects.total,
-        analyticsCount: {
-          thisMonthTaskCount: taskCount,
-          thisMonthAssignedCount: assignedTaskCount,
-          thisMonthCompletedCount: completedTaskCount,
-          thisMontIncompletedCount: incompleteTaskCount,
-          thisMonthOverdueCount: overdueCount,
-          thisMonthMinusLastMonth: taskDifference,
-          thisMonthMinusLastMonthAssigned: assignedTaskDifference,
-          thisMonthMinusLastMonthCompleted: completedTaskDifference,
-          thisMonthMinusLastMonthIncompleted: incompleteTaskDifference,
-          thisMonthMinusLastMonthOverdue: overdueTaskDifference,
-        },
+        thisMonthTaskCount: taskCount,
+        thisMonthAssignedCount: assignedTaskCount,
+        thisMonthCompletedCount: completedTaskCount,
+        thisMontIncompletedCount: incompleteTaskCount,
+        thisMonthOverdueCount: overdueCount,
+        thisMonthMinusLastMonth: taskDifference,
+        thisMonthMinusLastMonthAssigned: assignedTaskDifference,
+        thisMonthMinusLastMonthCompleted: completedTaskDifference,
+        thisMonthMinusLastMonthIncompleted: incompleteTaskDifference,
+        thisMonthMinusLastMonthOverdue: overdueTaskDifference,
       },
     });
   });

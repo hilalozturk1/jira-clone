@@ -42,7 +42,7 @@ export const WorkspaceInfo = () => {
   }
   return (
     <div className="h-full flex flex-col">
-      <Analytics data={workspaceData?.analyticsCount} />
+      <Analytics data={workspaceData} />
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-1">
         <ProjectList
           projects={projectData?.documents}
