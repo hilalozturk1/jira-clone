@@ -34,12 +34,15 @@ export const TaskDetailClient = () => {
   return (
     <div className="w-full flex flex-col bg-slate-200 bg-opacity-25">
       <TaskBreadcrumbs
-        project={projectData ? projectData : {}}
+        project={projectData?.updatedTask}
         task={taskData?.task}
       ></TaskBreadcrumbs>
       <Separator className="my-4" />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <TaskOverview project={projectData} task={taskData?.task} />
+        <TaskOverview
+          project={projectData?.updatedTask}
+          task={taskData?.task}
+        />
         <TaskDescription task={taskData?.task} />
       </div>
     </div>

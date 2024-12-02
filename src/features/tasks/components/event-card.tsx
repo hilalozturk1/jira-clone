@@ -39,7 +39,7 @@ function EventCard({ title, assignee, project, status, id }: EventCardProps) {
         >
           <span className="text-xs">{title}</span>
           <div className="flex items-center gap-x-1">
-            <MemberAvatar name={assignee?.name} />
+            <MemberAvatar name={assignee} />
             <WorkspaceAvatar
               name={project.name}
               image={project.imageUrl}

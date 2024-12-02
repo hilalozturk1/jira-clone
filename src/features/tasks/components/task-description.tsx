@@ -23,7 +23,7 @@ export const TaskDescription = ({ task }: TaskDesriptionProps) => {
   const handleUpdateDescription = () => {
     mutate(
       {
-        json: {
+        form: {
           description: value,
           workspaceId: task.workspaceId,
         },

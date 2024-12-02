@@ -24,7 +24,7 @@ export const WorkspaceAvatar = ({
       <div
         className={cn("relative rounded-md overflow-hidden", imageClassName)}
       >
-        <Image src={image} alt={name} fill className="object-cover" /> {name}
+        <Image src={image} alt="" fill className="object-cover" /> {name}
       </div>
     );
   }

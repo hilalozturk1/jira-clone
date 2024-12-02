@@ -60,7 +60,7 @@ const EditTaskForm = ({ onCancel }: EditTaskFormProps) => {
 
   const { data: taskData, isLoading: isLoadingTask } = useGetTask({ taskId });
 
-  const { mutate: updateProject, isPending } = useUpdateTask();
+  const { mutate: updateTask, isPending } = useUpdateTask();
   const { data: projects, isLoading: isLoadingProjects } = useGetProjects({
     workspaceId,
   });
@@ -82,13 +82,13 @@ const EditTaskForm = ({ onCancel }: EditTaskFormProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof updateTaskSchema>) => {
-    updateProject({
-      json: {
+    updateTask({
+      form: {
         ...values,
         workspaceId,
         status: statusValue ? statusValue : taskData?.task.status,
         projectId: projectIdValue ? projectIdValue : taskData?.task.projectId,
-        dueDate: dueDateValue,
+        dueDate: dueDateValue ? dueDateValue : taskData?.task.dueDate,
       },
       param: { taskId: taskData?.task?.$id || "" },
     });
