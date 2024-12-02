@@ -19,14 +19,14 @@ export type Task = Models.Document & {
 };
 
 export type AnalyticsTypes = {
-  thisMonthTaskCount: number;
-  thisMonthAssignedCount: number;
-  thisMonthCompletedCount: number;
-  thisMontIncompletedCount: number;
-  thisMonthOverdueCount: number;
-  thisMonthMinusLastMonth: number;
-  thisMonthMinusLastMonthAssigned: number;
-  thisMonthMinusLastMonthCompleted: number;
-  thisMonthMinusLastMonthIncompleted: number;
-  thisMonthMinusLastMonthOverdue: number;
-};
+  thisMonthTaskCount: any;
+  thisMonthAssignedCount: any;
+  thisMonthCompletedCount: any;
+  thisMontIncompletedCount: any;
+  thisMonthOverdueCount: any;
+  thisMonthMinusLastMonth: any;
+  thisMonthMinusLastMonthAssigned: any;
+  thisMonthMinusLastMonthCompleted: any;
+  thisMonthMinusLastMonthIncompleted: any;
+  thisMonthMinusLastMonthOverdue: any;
+} | undefined;

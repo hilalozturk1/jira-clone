@@ -394,7 +394,6 @@ const app = new Hono()
 
     return c.json({
       data: {
-        analyticsCount: {
           thisMonthTaskCount: taskCount,
           thisMonthAssignedCount: assignedTaskCount,
           thisMonthCompletedCount: completedTaskCount,
@@ -405,7 +404,6 @@ const app = new Hono()
           thisMonthMinusLastMonthCompleted: completedTaskDifference,
           thisMonthMinusLastMonthIncompleted: incompleteTaskDifference,
           thisMonthMinusLastMonthOverdue: overdueTaskDifference,
-        },
       },
     });
   });
