@@ -21,7 +21,8 @@ export const MemberAvatar = ({
           fallbackClassName
         )}
       >
-        {name?.slice(0,1).toUpperCase()}
+        {/*name?.slice(0,1).toUpperCase()*/}
+        {name}
       </AvatarFallback>
     </Avatar>
   );

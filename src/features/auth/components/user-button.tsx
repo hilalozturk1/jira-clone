@@ -31,9 +31,12 @@ export const UserButton = () => {
   const { name, email } = data;
 
   const avatarFallback = name
+    ? name
+    : email
+{/**
+  name
     ? name.slice(0, 1).toUpperCase()
-    : email.slice(0, 1).toUpperCase();
-
+    : email.slice(0, 1).toUpperCase(); */}
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="outline-none relative">
