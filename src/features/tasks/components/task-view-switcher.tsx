@@ -80,7 +80,7 @@ export const TaskViewSwitcher = () => {
           setLocalStorageTabValue(getLocalStorageTabValue);
         }
       }
-      router.refresh();
+      //router.refresh();
     }
   }, [tabValue, setTabValue]);
 
@@ -151,7 +151,7 @@ export const TaskViewSwitcher = () => {
           <TabsContent value="table" className="mt-0">
             <DataTable columns={columns} data={tasksData?.documents ?? []} />
           </TabsContent>
-         {/*  <TabsContent value="kanban" className="mt-0">
+          {/*  <TabsContent value="kanban" className="mt-0">
            <DataKanban
               onChange={onKanbanChange}
               data={tasksData?.documents || []}

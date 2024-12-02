@@ -58,7 +58,7 @@ export const DataFilters = ({}: DataFiltersProps) => {
         setLocalStorageStatus(getLocalStorageStatus);
       }
     }
-    router.refresh();
+    //router.refresh();
   }, [filter, setFilter]);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export const DataFilters = ({}: DataFiltersProps) => {
         setLocalStorageProjectId(getLocalStorageProjectId);
       }
     }
-    router.refresh();
+    //router.refresh();
   }, [filterProjectId, setFilterProjectId]);
 
   const onStatusChange = (value: string) => {

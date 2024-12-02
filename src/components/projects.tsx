@@ -22,7 +22,7 @@ export const Projects = () => {
 
   const setProjectId = (project: string) => {
     localStorage.setItem("localStorageProjectId", project);
-    router.refresh();
+    //router.refresh();
   };
 
   return (
