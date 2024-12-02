@@ -58,7 +58,7 @@ export const ProjectIdClient = () => {
           <p className="text-md font-medium p-2"> {data?.name}</p>
         </div>
       </div>
-      <Analytics data={analytics?.analyticsCount} />
+      <Analytics data={analytics} />
       <TaskViewSwitcher />
     </div>
   );
