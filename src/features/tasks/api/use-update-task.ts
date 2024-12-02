@@ -17,9 +17,9 @@ export const useUpdateTask = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({ json, param }) => {
+    mutationFn: async ({ form, param }) => {
       const response = await client.api.tasks[":taskId"].$patch({
-        json,
+        form,
         param,
       });
 
@@ -30,7 +30,7 @@ export const useUpdateTask = () => {
       return await response.json();
     },
     onSuccess: (data: any) => {
-      toast.success("Task updated", data);
+      toast.success("Task updated");
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
     },

@@ -10,11 +10,7 @@ import { useGetProjects } from "@/features/projects/api/use-get-projects";
 
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
-interface CreateTaskFormWrapperProps {
-  onCancel?: boolean;
-}
-
-const CreateTaskFormWrapper = ({ onCancel }: CreateTaskFormWrapperProps) => {
+const CreateTaskFormWrapper = () => {
   const workspaceId = useWorkspaceId();
 
   const { data: projects, isLoading: isLoadingProjects } = useGetProjects({

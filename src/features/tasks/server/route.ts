@@ -159,9 +159,7 @@ const app = new Hono()
     }
 
     return c.json({
-      data: {
-        task,
-      },
+      data: task,
     });
   })
   .post(
@@ -222,25 +220,24 @@ const app = new Hono()
   .patch(
     "/:taskId",
     sessionMiddleware,
-    zValidator("json", updateTaskSchema),
+    zValidator("form", updateTaskSchema),
     async (c) => {
       const user = c.get("user");
       const databases = c.get("databases");
       const { taskId } = c.req.param();
 
-      const {
-        name,
-        status,
-        workspaceId,
-        projectId,
-        dueDate,
-        assigneeId,
-        description,
-      } = c.req.valid("json");
+      const { name, status, projectId, dueDate, assigneeId, description } =
+        c.req.valid("form");
+
+      const task = await databases.getDocument<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        taskId
+      );
 
       const member = await getMember({
         databases,
-        workspaceId,
+        workspaceId: task.workspaceId,
         userId: user.$id,
       });
 

@@ -39,6 +39,11 @@ export type Task = {
   $id: string;
 };
 
+export type ProjectData= {
+  name: string,
+  image: string
+}
+
 export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "name",
@@ -92,16 +97,11 @@ export const columns: ColumnDef<Task>[] = [
       return <div className="text-left">Project Id</div>;
     },
     cell: ({ row }) => {
-      const project = row.original.project;
+      const project =  row.original.project;
 
       return (
         <div className="flex items-center gap-x-2 text-sm">
-          <WorkspaceAvatar
-            className="size-6"
-            name={project.name}
-            image={project.image}
-          />
-          <span className="line-clamp-1"> {project.name}</span>
+        
         </div>
       );
     },
