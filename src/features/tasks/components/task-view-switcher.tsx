@@ -7,7 +7,6 @@ import { useCallback, useEffect, useState } from "react";
 import { DeleteIcon, Loader, PlusIcon } from "lucide-react";
 
 import { DataTable } from "./data-table";
-//import { DataKanban } from "./data-kanban";
 import { DataFilters } from "./data-filters";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -20,6 +19,7 @@ import { useGetTasks } from "../api/use-get-tasks";
 import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import DataCalendar from "./data-calendar";
+import { DataKanban } from "./data-kanban";
 
 export const TaskViewSwitcher = () => {
   const router = useRouter();
@@ -151,12 +151,12 @@ export const TaskViewSwitcher = () => {
           <TabsContent value="table" className="mt-0">
             <DataTable columns={columns} data={tasksData?.documents ?? []} />
           </TabsContent>
-          {/*  <TabsContent value="kanban" className="mt-0">
-           <DataKanban
+          <TabsContent value="kanban" className="mt-0">
+            <DataKanban
               onChange={onKanbanChange}
               data={tasksData?.documents || []}
             ></DataKanban>
-          </TabsContent>*/}
+          </TabsContent>
           <TabsContent value="calendar" className="mt-0">
             <DataCalendar data={tasksData?.documents || []} />
           </TabsContent>
