@@ -25,14 +25,12 @@ export const UserButton = () => {
     );
   }
 
-  if (!data) {
-    return null;
-  }
-  const { name, email } = data;
+  const { name, email } = data ? data : {};
 
   const avatarFallback = name
     ? name
     : email
+
 {/**
   name
     ? name.slice(0, 1).toUpperCase()

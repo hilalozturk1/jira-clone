@@ -5,7 +5,7 @@ import { FaGithub } from "react-icons/fa";
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -31,6 +31,8 @@ function SignInPage() {
   const { mutate } = useLogin();
   const { data, isLoading, refetch } = useCurrent();
 
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -42,9 +44,9 @@ function SignInPage() {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       mutate({ json: values });
-      setTimeout(async () => {
+      /*setTimeout(async () => {
         await refetch();
-      }, 1000);
+      }, 1000);*/
     } catch (error) {
       console.error("Error: ", error);
     }
@@ -52,7 +54,7 @@ function SignInPage() {
 
   useEffect(() => {
     if (data && !isLoading) {
-      redirect("/");
+      router.push("/workspaces/create");
     }
   }, [data]);
 
