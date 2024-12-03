@@ -62,13 +62,13 @@ const app = new Hono()
                 password
             );
 
-            setCookie(c, AUTH_COOKIE, session.secret, {
+            /*setCookie(c, AUTH_COOKIE, session.secret, {
                 path: "/",
                 httpOnly: true,
                 secure: true,
                 sameSite: "strict",
                 maxAge: 60 * 60 * 24 * 30
-            });
+            });*/
  
             return c.json({ success: "ok" });
         }
