@@ -3,8 +3,9 @@ import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { deleteCookie, setCookie } from "hono/cookie";
 
-import { loginSchema, registerSchema } from "../schemas";
 import { AUTH_COOKIE } from "../constants";
+import { loginSchema, registerSchema } from "../schemas";
+import { responses } from "../../../../assets/responses";
 
 import { ID } from "node-appwrite";
 import { createAdminClient } from "@/lib/appwrite";
@@ -46,13 +47,16 @@ const app = new Hono()
           sameSite: "strict",
           maxAge: 60 * 60 * 24 * 30,
         });
-      } catch (error: any | undefined) {
+      } catch (e) {
         return c.json({
-          status: 401,
-          message: "Please check the email and password.",
+          status: responses.login.error.status,
+          message: responses.login.error.message,
         });
       }
-      return c.json({ status: 200, message: "Ok" });
+      return c.json({
+        status: responses.login.success.status,
+        message: responses.login.success.message,
+      });
     }
   )
   .post(
