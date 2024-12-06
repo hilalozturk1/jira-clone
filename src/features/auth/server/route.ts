@@ -11,77 +11,85 @@ import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session-middleware";
 
 const app = new Hono()
-    .get(//current user
-        "/current", 
-        sessionMiddleware, 
-        (c) => {
-            const user = c.get("user");
+  .get(
+    //current user
+    "/current",
+    sessionMiddleware,
+    (c) => {
+      const user = c.get("user");
 
-            return c.json({ data: user});
-        }
-    )
-    .post(//login
-        "/login",
-        zValidator("json", loginSchema),
-        async (c) => {
-            const { email, password } = c.req.valid("json");
+      return c.json({ data: user });
+    }
+  )
+  .post(
+    //login
+    "/login",
+    zValidator("json", loginSchema, (result, c) => {
+      console.log("result :>> ", result);
+      if (!result.success) {
+        return c.text("Invalid!", 400);
+      }
+    }),
+    async (c) => {
+      const { email, password } = c.req.valid("json");
 
-            const { account } = await createAdminClient();
-            const session = await account.createEmailPasswordSession(
-                email,
-                password
-            );
+      try {
+        const { account } = await createAdminClient();
+        const session = await account.createEmailPasswordSession(
+          email,
+          password
+        );
+        setCookie(c, AUTH_COOKIE, session.secret, {
+          path: "/",
+          httpOnly: true,
+          secure: true,
+          sameSite: "strict",
+          maxAge: 60 * 60 * 24 * 30,
+        });
+      } catch (error: any | undefined) {
+        return c.json({
+          status: 401,
+          message: "Please check the email and password.",
+        });
+      }
+      return c.json({ status: 200, message: "Ok" });
+    }
+  )
+  .post(
+    //register
+    "/register",
+    zValidator("json", registerSchema),
+    async (c) => {
+      const { name, email, password } = c.req.valid("json");
 
-            setCookie(c, AUTH_COOKIE, session.secret, {
-                path: "/",
-                httpOnly: true,
-                secure: true,
-                sameSite: "strict",
-                maxAge: 60 * 60 * 24 * 30
-            });     
-            
-            return c.json({ success: "ok"})
-        }
-    )
-    .post(//register
-        "/register",
-        zValidator("json", registerSchema),
-        async (c) => {
-            const { name, email, password } = c.req.valid("json");
-            
-            const { account } = await createAdminClient();
-            const user = await account.create(
-                ID.unique(),
-                email,
-                password,
-                name
-            );
+      const { account } = await createAdminClient();
+      const user = await account.create(ID.unique(), email, password, name);
 
-            const session = await account.createEmailPasswordSession(
-                email,
-                password
-            );
+      const session = await account.createEmailPasswordSession(email, password);
 
-            /*setCookie(c, AUTH_COOKIE, session.secret, {
+      /*setCookie(c, AUTH_COOKIE, session.secret, {
                 path: "/",
                 httpOnly: true,
                 secure: true,
                 sameSite: "strict",
                 maxAge: 60 * 60 * 24 * 30
             });*/
- 
-            return c.json({ success: "ok" });
-        }
-    )
-    .post(//logout
-        "/logout", sessionMiddleware, async(c) => {
-        const account = c.get("account");
-       
-        deleteCookie(c, AUTH_COOKIE);
-        await account.deleteSession("current");
-        
-        return c.json({success: true});
-    })
 
+      return c.json({ success: "ok" });
+    }
+  )
+  .post(
+    //logout
+    "/logout",
+    sessionMiddleware,
+    async (c) => {
+      const account = c.get("account");
+
+      deleteCookie(c, AUTH_COOKIE);
+      await account.deleteSession("current");
+
+      return c.json({ success: true });
+    }
+  );
 
 export default app;
