@@ -12,6 +12,15 @@ import { getMember } from "@/features/members/utils";
 import { sessionMiddleware } from "@/lib/session-middleware";
 import { Project } from "../types";
 import { TaskStatus } from "@/features/tasks/types";
+import { toast } from "sonner";
+import { responses } from "../../../../assets/responses";
+
+type TResponse =
+  | {
+      total: number;
+      documents: Project[];
+    }
+  | undefined;
 
 const app = new Hono()
   .get(
@@ -21,7 +30,16 @@ const app = new Hono()
       "query",
       z.object({
         workspaceId: z.string(),
-      })
+      }),
+      (result, c) => {
+        if (!result.success) {
+          return c.json({
+            projects: { total: 0, documents: [] },
+            status: responses.general.zoderror.status,
+            message: responses.general.zoderror.message,
+          });
+        }
+      }
     ),
     async (c) => {
       const user = c.get("user");
@@ -30,7 +48,11 @@ const app = new Hono()
       const { workspaceId } = c.req.valid("query");
 
       if (!workspaceId) {
-        c.json({ error: "Missing workspaceId" }, 400);
+        return c.json({
+          projects: { total: 0, documents: [] },
+          status: responses.general.notfound.status,
+          message: responses.general.notfound.message,
+        });
       }
 
       const member = await getMember({
@@ -40,18 +62,54 @@ const app = new Hono()
       });
 
       if (!member) {
-        c.json({ error: "Unauthorized" }, 401);
+        return c.json({
+          projects: { total: 0, documents: [] },
+          status: responses.general.membernotfound.status,
+          message: responses.general.membernotfound.message,
+        });
       }
 
-      const projects = await databases.listDocuments<Project>(DATABASE_ID, PROJECTS_ID, [
-        Query.equal("workspaceId", workspaceId),
-        Query.orderDesc("$createdAt"),
-      ]);
+      let projects: TResponse;
 
-      return c.json({ data: projects });
+      try {
+        projects = await databases.listDocuments<Project>(
+          DATABASE_ID,
+          PROJECTS_ID,
+          [
+            Query.equal("workspaceId", workspaceId),
+            Query.orderDesc("$createdAt"),
+          ]
+        );
+      } catch (error: any) {
+        return c.json({
+          projects: projects,
+          status:
+            error === "Not Found"
+              ? responses.general.notfound.status
+              : error === "Internal Server Error"
+              ? responses.general.servererror.status
+              : error === "Bad Request"
+              ? responses.general.badrequest.status
+              : responses.projects.error.status,
+          message:
+            error === "Not Found"
+              ? responses.general.notfound.message
+              : error === "Internal Server Error"
+              ? responses.general.servererror.message
+              : error === "Bad Request"
+              ? responses.general.badrequest.message
+              : responses.projects.error.message,
+        });
+      }
+
+      return c.json({
+        projects: { total: projects.total, documents: projects.documents },
+        status: responses.projects.success.status,
+        message: responses.projects.success.message,
+      });
     }
   )
-  .get("/:projectId", sessionMiddleware, async (c) => {
+  .get("/:projectId", sessionMiddleware, async (c, next) => {
     const user = c.get("user");
     const databases = c.get("databases");
 
@@ -67,6 +125,15 @@ const app = new Hono()
       c.json({ error: "Missing workspaceId" }, 400);
     }
 
+    /*    
+    try {
+      verifySession(c, next);
+    } catch (e: unknown) {
+      console.log('e :>> ', e);
+      toast.error("error")
+      throw new HTTPException(401, { message: "message", cause: e });
+    }
+*/
     const member = await getMember({
       databases,
       workspaceId: project.workspaceId,
@@ -74,7 +141,8 @@ const app = new Hono()
     });
 
     if (!member) {
-      c.json({ error: "Unauthorized" }, 401);
+      toast.error("error");
+      c.json({ error: "Unauthorized Member not found" }, 401);
     }
 
     return c.json({ data: project });
@@ -83,7 +151,7 @@ const app = new Hono()
     "/",
     sessionMiddleware,
     zValidator("form", createProjectSchema),
-    async (c) => {
+    async (c, next) => {
       const databases = c.get("databases");
       const storage = c.get("storage");
       const user = c.get("user");
