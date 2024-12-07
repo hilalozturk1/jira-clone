@@ -13,6 +13,10 @@ export const responses: Record<string, Record<string, TResponse>> = {
     error: { status: 401, message: "Failed to fetch projects." },
     success: { status: 200, message: "Success." },
   },
+  current: {
+    error: { status: 401, message: "Do not found user." },
+    success: { status: 200, message: "Success." },
+  },
   general: {
     notfound: { status: 404, message: "Not found" },
     badrequest: { status: 400, message: "Bad request" },
