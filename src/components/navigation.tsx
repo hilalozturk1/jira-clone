@@ -49,7 +49,7 @@ export const Navigation = () => {
   const workspaceId = useWorkspaceId();
   const ref = useRef(null);
 
-  const [key, setKey] = useState<number>();
+  const [key, setKey] = useState<number>(1);
 
   const handleClick = (e: any, i: any) => {
     setKey(i);
