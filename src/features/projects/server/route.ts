@@ -350,7 +350,7 @@ const app = new Hono()
       TASKS_ID,
       [
         Query.equal("projectId", projectId),
-        Query.equal("assigneeId", member.$id),
+        Query.equal("assigneeId", member?.$id ? member?.$id : ""),
         Query.greaterThanEqual("$createdAt", thisMonthStart.toISOString()),
         Query.lessThanEqual("$createdAt", thisMonthEnd.toISOString()),
       ]
@@ -361,7 +361,7 @@ const app = new Hono()
       TASKS_ID,
       [
         Query.equal("projectId", projectId),
-        Query.equal("assigneeId", member.$id),
+        Query.equal("assigneeId", member?.$id ? member?.$id : ""),
         Query.greaterThanEqual("$createdAt", lastMonthStart.toISOString()),
         Query.lessThanEqual("$createdAt", lastMonthEnd.toISOString()),
       ]
