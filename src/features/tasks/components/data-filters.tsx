@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { Project } from "@/features/projects/types";
 
 interface DataFiltersProps {
   projectFilter?: boolean;
@@ -35,7 +36,7 @@ export const DataFilters = ({}: DataFiltersProps) => {
     workspaceId,
   });
 
-  const projectOptions = projectsData?.documents.map((project) => ({
+  const projectOptions = projectsData?.projects?.documents.map((project) => ({
     id: project.$id,
     name: project?.name,
   }));
