@@ -42,20 +42,21 @@ function WorkspaceSwither() {
           <SelectValue placeholder="No workspace selected." />
         </SelectTrigger>
         <SelectContent>
-          {data?.documents.map((i) => (
-            <SelectItem key={i.$id} value={i.$id}>
-              <div className="flex justify-start items-center gap-3">
-                <WorkspaceAvatar
-                  image={i.imageUrl}
-                  name={i.name}
-                  imageClassName="size-2 text-sm font-normal bg-slate-300"
-                  className="size-6 text-sm font-normal bg-slate-300"
-                  fallbackClassName="bg-slate-300 text-lg font-normal"
-                />
-                <span className="truncate">{i.name}</span>
-              </div>{" "}
-            </SelectItem>
-          ))}
+          {data?.documents &&
+            data?.documents.map((i: any) => (
+              <SelectItem key={i.$id} value={i.$id}>
+                <div className="flex justify-start items-center gap-3">
+                  <WorkspaceAvatar
+                    image={i.imageUrl}
+                    name={i.name}
+                    imageClassName="size-2 text-sm font-normal bg-slate-300"
+                    className="size-6 text-sm font-normal bg-slate-300"
+                    fallbackClassName="bg-slate-300 text-lg font-normal"
+                  />
+                  <span className="truncate">{i.name}</span>
+                </div>{" "}
+              </SelectItem>
+            ))}
         </SelectContent>
       </Select>
     </div>
