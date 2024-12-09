@@ -7,7 +7,7 @@ import projects from "@/features/projects/server/route";
 import workspaces from "@/features/workspaces/server/route";
 import tasks from "@/features/tasks/server/route";
 import Stripe from "stripe";
-import { BlankEnv, BlankSchema } from "../../../../env";
+import { BlankEnv, BlankSchema } from "./env";
 
 //const app = new Hono().basePath("/api");
 const app = new Hono<BlankSchema>().basePath("/api");
