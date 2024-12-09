@@ -1,10 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { client } from "@/lib/rpc";
+import { InferResponseType } from "hono";
+import { toast } from "sonner";
+import router from "next/router";
 
 interface UseGetProjectsProps {
   workspaceId: string;
 }
+type ResponseType = InferResponseType<(typeof client.api.projects)["$get"]>;
 
 export const useGetProjects = ({ workspaceId }: UseGetProjectsProps) => {
   const query = useQuery({
@@ -14,13 +18,19 @@ export const useGetProjects = ({ workspaceId }: UseGetProjectsProps) => {
         query: { workspaceId },
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch projects.");
-      }
 
-      const { data } = await response.json();
+      let responseValues: ResponseType;
+      const asynResponse = async () => {
+        return await response.json();
+      };
 
-      return data;
+      responseValues = await asynResponse();
+  
+      responseValues.status === 500 && toast.error(responseValues.message);
+      responseValues.status === 200 && router.push("/home");
+
+      return responseValues;
+
     },
   });
 
