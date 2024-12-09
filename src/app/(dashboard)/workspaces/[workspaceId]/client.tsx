@@ -45,8 +45,8 @@ export const WorkspaceInfo = () => {
       <Analytics data={workspaceData} />
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-1">
         <ProjectList
-          projects={projectData?.documents}
-          total={projectData?.total}
+          projects={projectData?.projects?.documents && projectData?.projects.documents}
+          total={projectData?.projects?.total && projectData.projects.total}
         />
         <MemberListWorkspace
           members={membersData?.documents}

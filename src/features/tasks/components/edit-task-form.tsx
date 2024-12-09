@@ -94,7 +94,7 @@ const EditTaskForm = ({ onCancel }: EditTaskFormProps) => {
     });
   };
 
-  const projectOptions = projects?.documents.map((project) => ({
+  const projectOptions = projects?.projects && projects?.projects.documents.map((project) => ({
     id: project.$id,
     name: project?.name,
     imageUrl: project?.imageUrl,
