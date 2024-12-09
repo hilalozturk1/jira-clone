@@ -35,8 +35,9 @@ export const sessionMiddleware = createMiddleware<AdditionalContext>(
       const client = new Client()
         .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
         .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!);
-
-      const session = getCookie(c, AUTH_COOKIE);
+        
+      const auth: any = process.env.NEXT_PUBLIC_AUTH_COOKIE;
+      const session = getCookie(c, auth);
 
       if (!session) {
         return c.json({});
