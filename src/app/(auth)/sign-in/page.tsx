@@ -5,7 +5,7 @@ import { FaGithub } from "react-icons/fa";
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -36,17 +36,17 @@ function SignInPage() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-        email: "",
-        password: ""
+      email: "",
+      password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       mutate({ json: values });
-      /*setTimeout(async () => {
+      setTimeout(async () => {
         await refetch();
-      }, 1000);*/
+      }, 1000);
     } catch (error) {
       console.error("Error: ", error);
     }
@@ -54,77 +54,91 @@ function SignInPage() {
 
   useEffect(() => {
     if (data && !isLoading) {
-      router.push("/workspaces/create");
+      router.push("/");
     }
   }, [data]);
 
   return (
-    <Card className='w-full h-full md:w-[487px] border-none shadow-none'>
-      <CardHeader className='flex ştems-center justify-center text-center p-5'>
-        <CardTitle className='text-xl md:text-2xl'>
-          Welcome Back!
-        </CardTitle>
-      </CardHeader>  
-      <div className='px-7 mb-2'>
-        <Separator/>
+    <Card className="w-full h-full md:w-[487px] border-none shadow-none">
+      <CardHeader className="flex ştems-center justify-center text-center p-5">
+        <CardTitle className="text-xl md:text-2xl">Welcome Back!</CardTitle>
+      </CardHeader>
+      <div className="px-7 mb-2">
+        <Separator />
       </div>
-      <CardContent className='py-7'>
+      <CardContent className="py-7">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               name="email"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input 
+                    <Input
                       {...field}
-                      type='email'
-                      placeholder='Enter email address'
+                      type="email"
+                      placeholder="Enter email address"
                     />
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
-              )}>
-            </FormField>
+              )}
+            ></FormField>
             <FormField
               name="password"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input 
+                    <Input
                       {...field}
-                      type='password'
-                      placeholder='Enter password'
+                      type="password"
+                      placeholder="Enter password"
                     />
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
-              )}>
-            </FormField>
-            <Button type="submit" className='w-full' size="lg" disabled={false}>Login</Button>
+              )}
+            ></FormField>
+            <Button type="submit" className="w-full" size="lg" disabled={false}>
+              Login
+            </Button>
           </form>
         </Form>
         <div className="py-7">
-            <Separator/>
-          </div>
-        <Button disabled={false} variant="secondary" size="lg" className='w-full mb-2'>
-          <FcGoogle className="mr-2 size-5"></FcGoogle>Login with Google</Button>
-        <Button disabled={false} variant="secondary" size="lg" className='w-full'>
-          <FaGithub className="mr-2 size-5"></FaGithub>Login with Github</Button>
+          <Separator />
+        </div>
+        <Button
+          disabled={false}
+          variant="secondary"
+          size="lg"
+          className="w-full mb-2"
+        >
+          <FcGoogle className="mr-2 size-5"></FcGoogle>Login with Google
+        </Button>
+        <Button
+          disabled={false}
+          variant="secondary"
+          size="lg"
+          className="w-full"
+        >
+          <FaGithub className="mr-2 size-5"></FaGithub>Login with Github
+        </Button>
       </CardContent>
       <div className="px-7">
-        <Separator/>
+        <Separator />
       </div>
       <CardContent className="p-7 flex items-center justify-center">
         <p>
           Don&apos;t have an account?
-          <Link href="/sign-up" className="text-blue-700">&nbsp;Sign Up</Link>
+          <Link href="/sign-up" className="text-blue-700">
+            &nbsp;Sign Up
+          </Link>
         </p>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default SignInPage;
