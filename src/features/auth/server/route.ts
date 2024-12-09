@@ -17,9 +17,23 @@ const app = new Hono()
     "/current",
     sessionMiddleware,
     (c) => {
-      const user = c.get("user");
+      try {
+        const user = c.get("user");
 
-      return c.json({ data: user });
+        return c.json({
+          data: user,
+          status: responses.current.success.status,
+          message: responses.current.success.message,
+        });
+      } catch (error) {
+        console.log("error :>> ", error);
+        error === "Unauthorized" && responses.current.error.status;
+        return c.json({
+          data: [],
+          status: responses.current.success.status,
+          message: responses.current.success.message,
+        });
+      }
     }
   )
   .post(
@@ -35,12 +49,13 @@ const app = new Hono()
       const { email, password } = c.req.valid("json");
 
       try {
+        const auth: any = process.env.NEXT_PUBLIC_AUTH_COOKIE;
         const { account } = await createAdminClient();
         const session = await account.createEmailPasswordSession(
           email,
           password
         );
-        setCookie(c, AUTH_COOKIE, session.secret, {
+        setCookie(c, auth, session.secret, {
           path: "/",
           httpOnly: true,
           secure: true,
@@ -54,8 +69,8 @@ const app = new Hono()
         });
       }
       return c.json({
-        status: responses.login.success.status,
-        message: responses.login.success.message,
+        status: responses.general.success.status,
+        message: responses.general.success.message,
       });
     }
   )
@@ -87,12 +102,21 @@ const app = new Hono()
     "/logout",
     sessionMiddleware,
     async (c) => {
-      const account = c.get("account");
+      try {
+        const account = c.get("account");
 
-      deleteCookie(c, AUTH_COOKIE);
-      await account.deleteSession("current");
-
-      return c.json({ success: true });
+        deleteCookie(c, AUTH_COOKIE);
+        await account.deleteSession("current");
+        return c.json({
+          status: responses.general.success.status,
+          message: responses.general.success.message,
+        });
+      } catch (error) {
+        return c.json({
+          status: responses.general.unauthorized.status,
+          message: responses.general.unauthorized.message,
+        });
+      }
     }
   );
 
