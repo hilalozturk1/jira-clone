@@ -11,6 +11,7 @@ import { WorkspaceAvatar } from "@/features/workspaces/components/workspace-avat
 
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { Project } from "@/features/projects/types";
 
 export const Projects = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ export const Projects = () => {
           className="size-5 text-slate-300 cursor-pointer hover:opacity-75 transition"
         />
       </div>
-      {data?.documents.map((project) => {
+      {data?.projects && data?.projects.documents.map((project: Project) => {
         const isActive =
           localStorage.getItem("localStorageProjectId") === project.$id;
         const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
