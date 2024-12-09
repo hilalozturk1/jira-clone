@@ -24,7 +24,7 @@ export const useLogin = () => {
       responseValues = await asynResponse();
 
       responseValues.status === 401 && toast.error(responseValues.message);
-      responseValues.status === 200 && router.push("/workspaces/create");
+      responseValues.status === 200 && router.push("/home");
 
       return responseValues;
     },
