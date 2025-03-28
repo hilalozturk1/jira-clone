@@ -54,7 +54,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (data && !isLoading) {
-      router.push("/dashboard");
+      router.push("/");
     }
     // Disable exhaustive deps warning because `user` should not cause re-run
     // eslint-disable-next-line react-hooks/exhaustive-deps
