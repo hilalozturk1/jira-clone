@@ -1,7 +1,5 @@
-export type BlankEnv = {
-  STRIPE_API_KEY: string;
-  STRIPE_WEBHOOK_SECRET: string;
-};
+// Örneğin:
+export type BlankEnv = Record<string, string | undefined>;
 
-export type BlankSchema = {
-};
+// Eğer ek bir schema gerekiyorsa boş obje yerine aşağıdaki gibi kullanabilirsiniz:
+export type BlankSchema = object;
