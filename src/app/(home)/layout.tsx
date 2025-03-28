@@ -1,5 +1,3 @@
-import Navbar from "@/components/navbar";
-import Sidebar from "@/components/sidebar";
 import { Loader } from "lucide-react";
 
 interface HomeLayoutProps {

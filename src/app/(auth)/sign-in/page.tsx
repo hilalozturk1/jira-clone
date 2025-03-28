@@ -27,7 +27,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-function SignInPage() {
+export default function SignInPage() {
   const { mutate } = useLogin();
   const { data, isLoading, refetch } = useCurrent();
 
@@ -54,8 +54,10 @@ function SignInPage() {
 
   useEffect(() => {
     if (data && !isLoading) {
-      router.push("/");
+      router.push("/dashboard");
     }
+    // Disable exhaustive deps warning because `user` should not cause re-run
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (
@@ -140,5 +142,3 @@ function SignInPage() {
     </Card>
   );
 }
-
-export default SignInPage;

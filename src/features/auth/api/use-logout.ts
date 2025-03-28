@@ -14,12 +14,12 @@ export const useLogout = () => {
     mutationFn: async () => {
       const response = await client.api.auth.logout.$post();
 
-      let responseValues: ResponseType;
       const asynResponse = async () => {
         return await response.json();
       };
 
-      responseValues = await asynResponse();
+      
+      const responseValues: ResponseType = await asynResponse();
 
       responseValues.status === 401 && toast.error(responseValues.message);
       responseValues.status === 200 && router.push("/sign-in");
