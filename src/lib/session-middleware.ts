@@ -40,7 +40,7 @@ export const sessionMiddleware = createMiddleware<AdditionalContext>(
       const session = getCookie(c, auth);
 
       if (!session) {
-        return c.json({});
+        return c.json(undefined, 401);
       }
 
       client.setSession(session);

@@ -4,6 +4,7 @@ import { client } from "@/lib/rpc";
 import { toast } from "sonner";
 import { InferResponseType } from "hono";
 import { responses } from "../../../../assets/responses";
+import { useRouter } from "next/navigation";
 
 type ResponseType = InferResponseType<(typeof client.api.auth.current)["$get"]>;
 
@@ -13,7 +14,7 @@ export const useCurrent = () => {
     queryFn: async () => {
       const response = await client.api.auth.current.$get();
 
-      if (!response.ok && response.status === 404) {
+      if (!response.ok && response.status === 401) {
         toast.success(response?.statusText);
       }
 
