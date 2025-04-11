@@ -22,7 +22,6 @@ export const responses: Record<string, Record<string, TResponse>> = {
     zoderror: { status: 400, message: "Invalid type" },
     membernotfound: { status: 401, message: "Unauthorized Member not found" },
     servererror: { status: 500, message: "Internal Server Error" },
-    error: { status: 401, message: "Error." },
-    success: { status: 200, message: "Success." },
+    error: { status: 401, message: "Error." }
   },
 };
