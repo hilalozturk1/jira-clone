@@ -6,12 +6,12 @@ import members from "@/features/members/server/route";
 import projects from "@/features/projects/server/route";
 import workspaces from "@/features/workspaces/server/route";
 import tasks from "@/features/tasks/server/route";
-import Stripe from "stripe";
-import { BlankEnv, BlankSchema } from "./env";
+//import Stripe from "stripe";
+//import { BlankEnv, BlankSchema } from "./env";
 
-//const app = new Hono().basePath("/api");
-const app = new Hono<BlankSchema>().basePath("/api");
-
+const app = new Hono().basePath("/api");
+//const app = new Hono<BlankSchema>().basePath("/api");
+/*
 app.post("/webhook", async (context) => {
   const STRIPE_API_KEY = process.env.STRIPE_API_KEY as string;
   const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
@@ -44,7 +44,7 @@ app.post("/webhook", async (context) => {
     console.log(errorMessage);
     return context.text(errorMessage, 400);
   }
-});
+});*/
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const routes = app

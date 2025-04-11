@@ -25,8 +25,8 @@ export const UserButton = () => {
     );
   }
 console.log('data :>> ', data);
-  const name = data?.data?.name || "";
-  const email = data?.data?.email || "";
+  const name = !Array.isArray(data?.data) ? data?.data?.name || "" : "";
+  const email = !Array.isArray(data?.data) ? data?.data?.email || "" : "";
 
   const avatarFallback = () => {
     return name ? name.slice(0, 1).toUpperCase() : email.slice(0, 1).toUpperCase();
