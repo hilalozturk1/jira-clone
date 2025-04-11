@@ -79,6 +79,7 @@ const app = new Hono()
     "/register",
     zValidator("json", registerSchema),
     async (c) => {
+    try {
       const { name, email, password } = c.req.valid("json");
 
       const { account } = await createAdminClient();
@@ -95,6 +96,10 @@ const app = new Hono()
             });*/
 
       return c.json({ success: "ok" });
+    } catch (error:any) {
+      const errorMessage = {status: error.code, message: error.message};
+      return c.json({ error: errorMessage });
+    }
     }
   )
   .post(
