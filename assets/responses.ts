@@ -6,12 +6,15 @@ type TResponse = {
 
 export const responses: Record<string, Record<string, TResponse>> = {
   login: {
+    success: { status: 200, message: "Success." },
     error: { status: 401, message: "Please check the email and password." },
   },
   projects: {
+    success: { status: 200, message: "Success." },
     error: { status: 401, message: "Failed to fetch projects." },
   },
   current: {
+    success: { status: 200, message: "Success." },
     error: { status: 401, message: "Do not found user." },
   },
   general: {

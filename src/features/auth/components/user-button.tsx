@@ -24,23 +24,20 @@ export const UserButton = () => {
       </div>
     );
   }
+console.log('data :>> ', data);
+  const name = data?.data?.name || "";
+  const email = data?.data?.email || "";
 
-  //const { name, email } = data?.data.name ? data?.data.name : {};
-
-  //const avatarFallback = name ? name : email;
-
-  {
-    /**
-  name
-    ? name.slice(0, 1).toUpperCase()
-    : email.slice(0, 1).toUpperCase(); */
+  const avatarFallback = () => {
+    return name ? name.slice(0, 1).toUpperCase() : email.slice(0, 1).toUpperCase();
   }
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="outline-none relative">
         <Avatar className="size-10 hover:opacity-75 transition border rounded-lg bg-neutral-100 border-none">
           <AvatarFallback className="rounded-lg bg-white font-medium text-neutral-500 flex items-center justify-center border-none">
-            {"User"}
+            {avatarFallback()}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -53,14 +50,12 @@ export const UserButton = () => {
         <div className="flex flex-col items-center justify-center gap-2 px-2.5 py-4">
           <Avatar className="size-[52px] border rounded-lg border-neutral-100">
             <AvatarFallback className="bg-neutral-200 font-medium text-neutral-500 flex items-center justify-center">
-              {"User"}
+              {avatarFallback()}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col items-center justify-center">
-            <p className="text-sm font-medium text-neutral-900">
-              {"User"}
-            </p>
-            <p className="text-xs text-neutral-500">{"user@gmail.com"}</p>
+            <p className="text-sm font-medium text-neutral-900">{name}</p>
+            <p className="text-xs text-neutral-500">{email}</p>
           </div>
         </div>
         <Separator />
