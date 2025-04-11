@@ -14,9 +14,14 @@ export const getMember = async ({
   workspaceId,
   userId,
 }: GetMemberProps) => {
-  const members = await databases.listDocuments<MemberType>(DATABASE_ID, MEMBERS_ID, [
-    Query.equal("workspaceId", workspaceId),
-    Query.equal("userId", userId),
-  ]);
-  return members.documents[0];
+  try {
+    const members = await databases.listDocuments<MemberType>(
+      DATABASE_ID,
+      MEMBERS_ID,
+      [Query.equal("workspaceId", workspaceId), Query.equal("userId", userId)]
+    );
+    return members.documents[0];
+  } catch (error) {
+    console.log("error :>> ", error);
+  }
 };
