@@ -18,12 +18,11 @@ export const useCurrent = () => {
         toast.success(response?.statusText);
       }
 
-      let responseValues: ResponseType;
       const asynResponse = async () => {
         return await response.json();
       };
 
-      responseValues = await asynResponse();
+      const responseValues: ResponseType = await asynResponse();
       responseValues.message === "Unauthorized" && responses.current.error;
       responseValues.status === 200 && responses.current.success;
       return responseValues;

@@ -53,7 +53,7 @@ export const CreateTasksForm = ({
   const { mutate, isPending } = UseCreateTask();
 
   const form = useForm<z.infer<typeof createTaskSchema>>({
-    resolver: zodResolver(createTaskSchema.omit({ workspaceId: true })),
+    resolver: zodResolver(createTaskSchema),
     defaultValues: {
       workspaceId,
     },

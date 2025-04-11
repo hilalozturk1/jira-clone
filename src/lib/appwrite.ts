@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 
 import "server-only";
 import { Client, Account, Storage, Users, Databases } from "node-appwrite";
@@ -11,7 +11,7 @@ export async function createSessionClient() {
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!);
 
   const auth: any = process.env.NEXT_PUBLIC_AUTH_COOKIE;
-  const session = await cookies().get(auth);
+  const session = await (await cookies()).get(auth);
 
   if (!session || !session.value) {
     throw new Error("Unauthorized");

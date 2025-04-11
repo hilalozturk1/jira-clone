@@ -12,6 +12,12 @@ body {
   }
 }
 
+@layer components {
+  .custom-border {
+    @apply border border-gray-200;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

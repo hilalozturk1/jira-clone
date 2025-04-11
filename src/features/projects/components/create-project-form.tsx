@@ -43,14 +43,16 @@ export const CreateProjectForm = ({ onCancel }: createProjectFormProps) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const form = useForm<z.infer<typeof createProjectSchema>>({
+  type CreateProjectFormValues = Omit<z.infer<typeof createProjectSchema>, "workspaceId">;
+  
+  const form = useForm<CreateProjectFormValues>({
     resolver: zodResolver(createProjectSchema.omit({ workspaceId: true })),
     defaultValues: {
       name: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof createProjectSchema>) => {
+  const onSubmit = (values: CreateProjectFormValues) => {
     console.log("values :>> ", values, workspaceId);
     const finalValues = {
       ...values,

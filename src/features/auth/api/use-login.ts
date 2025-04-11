@@ -16,12 +16,12 @@ export const useLogin = () => {
     mutationFn: async ({ json }) => {
       const response = await client.api.auth.login.$post({ json });
 
-      let responseValues: ResponseType;
+      
       const asynResponse = async () => {
         return await response.json();
       };
 
-      responseValues = await asynResponse();
+      const responseValues: ResponseType = await asynResponse();
 
       responseValues.status === 401 && toast.error(responseValues.message);
       responseValues.status === 200 && router.push("/home");
