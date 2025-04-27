@@ -1,6 +1,6 @@
 # Jira Clone
 
-A feature-rich task management application inspired by Jira, built with **Next.js**, **TypeScript**, **Honojs**, **Tanstack Query** and **Appwrite**. This project demonstrates a modern tech stack with a focus on scalability, performance, and user experience.
+A feature-rich task management application inspired by Jira, built with **Next.js**, **TypeScript**, **Honojs**, **Tanstack Query** and **Appwrite**. This project demonstrates a modern tech stack with a focus on user experience, a demo for show my skills.
 
 ## Live Demo
 
