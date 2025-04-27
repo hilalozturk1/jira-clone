@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import DayPicker from "react-day-picker"
+import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -25,8 +25,9 @@ function Calendar({
 }: CalendarProps) {
   return (
     <DayPicker
+      showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
-      classNames={({
+      classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
@@ -65,7 +66,11 @@ function Calendar({
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
         ...classNames,
-      } as any)}
+      }}
+      components={{
+        IconLeft: () => <ChevronLeftIcon className="h-4 w-4" />,
+        IconRight: () => <ChevronRightIcon className="h-4 w-4" />,
+      } as any}
       {...props}
     />
   )
