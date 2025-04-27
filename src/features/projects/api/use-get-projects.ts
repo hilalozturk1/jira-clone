@@ -24,9 +24,8 @@ export const useGetProjects = ({ workspaceId }: UseGetProjectsProps) => {
       };
 
       const responseValues: ResponseType = await asynResponse();
-  
       responseValues.status === 500 && toast.error(responseValues.message);
-      responseValues.status === 200 && router.push("/home");
+      //responseValues.status === 200 && router.push("/home");
 
       return responseValues;
 
