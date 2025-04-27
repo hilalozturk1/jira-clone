@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 type ResponseType = InferResponseType<(typeof client.api.auth.current)["$get"]>;
 
 export const useCurrent = () => {
+  const router = useRouter();
+
   const query = useQuery({
     queryKey: ["current"],
     queryFn: async () => {
@@ -23,8 +25,16 @@ export const useCurrent = () => {
       };
 
       const responseValues: ResponseType = await asynResponse();
-      responseValues.message === "Unauthorized" && responses.current.error;
-      responseValues.status === 200 && responses.current.success;
+
+      if (responseValues.message === "Unauthorized") {
+        responses.current.error;
+      }
+
+      if (responseValues.status === 200) {
+        responses.current.success;
+        router.push("/home");
+      }
+
       return responseValues;
     },
   });

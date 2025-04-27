@@ -26,8 +26,15 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function SignInPage() {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.removeQueries({ queryKey: ["current"] });
+  }, [queryClient]);
+
   const { mutate } = useLogin();
   const { data, isLoading, refetch } = useCurrent();
 
@@ -54,13 +61,13 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (data && !isLoading) {
-      router.push("/");
+      router.push("/home");
     }
     // Disable exhaustive deps warning because `user` should not cause re-run
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  return (
+  return (!isLoading && !data &&
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex ştems-center justify-center text-center p-5">
         <CardTitle className="text-xl md:text-2xl">Welcome Back!</CardTitle>
