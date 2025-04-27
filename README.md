@@ -73,7 +73,7 @@ Copy the invite code and send to the member
 
 ---
 
-## 📚 Features
+## Features
 
 - **User Authentication**: Secure login and registration.
 - **Task Management**: Create, update, and manage tasks across multiple projects.
@@ -82,8 +82,24 @@ Copy the invite code and send to the member
 - **Responsive Design**: Fully optimized for desktop and mobile devices.
 
 ---
+## Server-Side Rendering (SSR) vs Client-Side Rendering (CSR)
+### This project leverages Next.js's hybrid rendering capabilities:
 
-## 🖥️ Local Development
+Server-Side Rendering (SSR)
+- What it does: Renders pages on the server at request time.
+- Where it's used: Critical pages like dashboards and workspaces to ensure SEO optimization and faster initial load times.
+- Benefits:
+Better SEO as the content is rendered on the server.
+Faster perceived performance for the user.
+
+Client-Side Rendering (CSR)<br/>
+- What it does: Renders pages on the client after the initial load.
+- Where it's used: Interactive components like task management and real-time updates.
+- Benefits:
+Reduces server load by offloading rendering to the client.
+Enables dynamic updates without refreshing the page.
+
+## Local Development
 
 Follow these steps to set up the project locally:
 
